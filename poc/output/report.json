@@ -1,0 +1,879 @@
+{
+  "source": "합성 데이터 (실제 촬영 아님)",
+  "method": "Uncalibrated observation/angle/reprojection heuristic",
+  "limitations": [
+    "Not a learned rendering-error predictor",
+    "No 3DGS training or quality evaluation",
+    "Unobserved space cannot be detected",
+    "Candidate poses required; no direction or reachable route is inferred",
+    "No image sharpness feature"
+  ],
+  "regions": [
+    {
+      "region": "2:0:0",
+      "points": 6,
+      "mean_observations": 2.0,
+      "direction_diversity": 0.0699,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.6679,
+      "center": [
+        0.7219308614509296,
+        -0.6149055758108263,
+        -0.33577263947485664
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "2:0:1",
+      "points": 8,
+      "mean_observations": 2.0,
+      "direction_diversity": 0.0712,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.6675,
+      "center": [
+        0.5714057368678986,
+        -0.6306792786595071,
+        0.004305179589758873
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:1:2",
+      "points": 4,
+      "mean_observations": 2.0,
+      "direction_diversity": 0.0749,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.6664,
+      "center": [
+        0.21482164107883955,
+        -0.14480597549941526,
+        0.3592281170184908
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "low"
+    },
+    {
+      "region": "2:0:2",
+      "points": 5,
+      "mean_observations": 2.0,
+      "direction_diversity": 0.0766,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.6659,
+      "center": [
+        0.7544265376981476,
+        -0.7329549972754589,
+        0.29852833937588874
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "2:1:0",
+      "points": 11,
+      "mean_observations": 2.0,
+      "direction_diversity": 0.0801,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.6649,
+      "center": [
+        0.5970536356346247,
+        0.0005337862308603114,
+        -0.32535384992117194
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "2:2:0",
+      "points": 9,
+      "mean_observations": 2.0,
+      "direction_diversity": 0.0908,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.6616,
+      "center": [
+        0.6782739443364245,
+        0.7260859344551454,
+        -0.30847779504195466
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "2:2:1",
+      "points": 4,
+      "mean_observations": 2.0,
+      "direction_diversity": 0.0929,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.661,
+      "center": [
+        0.6400157044934629,
+        0.4237778291868866,
+        -0.0032995585537579086
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "low"
+    },
+    {
+      "region": "2:1:1",
+      "points": 6,
+      "mean_observations": 2.0,
+      "direction_diversity": 0.0942,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.6606,
+      "center": [
+        0.7829892551243219,
+        0.049256606162796666,
+        0.03703122084592512
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "2:1:2",
+      "points": 7,
+      "mean_observations": 2.0,
+      "direction_diversity": 0.102,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.6583,
+      "center": [
+        0.7991025601440296,
+        0.13690287288928732,
+        0.33353576361499127
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "2:2:2",
+      "points": 7,
+      "mean_observations": 2.0,
+      "direction_diversity": 0.1056,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.6572,
+      "center": [
+        0.6482835998283126,
+        0.6215516840896108,
+        0.3848095039748202
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:2:0",
+      "points": 7,
+      "mean_observations": 2.571,
+      "direction_diversity": 0.3034,
+      "reprojection_error_px": 0.7286,
+      "heuristic_risk": 0.5625,
+      "center": [
+        0.11392716218723918,
+        0.5501338131239557,
+        -0.39084476477434904
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:0:0",
+      "points": 9,
+      "mean_observations": 2.889,
+      "direction_diversity": 0.3342,
+      "reprojection_error_px": 0.6889,
+      "heuristic_risk": 0.536,
+      "center": [
+        0.057012918567400206,
+        -0.7380288654490094,
+        -0.31826517258338644
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:1:0",
+      "points": 6,
+      "mean_observations": 4.0,
+      "direction_diversity": 0.4908,
+      "reprojection_error_px": 0.55,
+      "heuristic_risk": 0.438,
+      "center": [
+        0.05254625656479317,
+        0.04256075702841392,
+        -0.297084318557018
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:0:2",
+      "points": 4,
+      "mean_observations": 4.0,
+      "direction_diversity": 0.5108,
+      "reprojection_error_px": 0.55,
+      "heuristic_risk": 0.432,
+      "center": [
+        0.04562628653186951,
+        -0.7204326376481212,
+        0.34538432236401806
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "low"
+    },
+    {
+      "region": "1:2:1",
+      "points": 6,
+      "mean_observations": 4.0,
+      "direction_diversity": 0.5733,
+      "reprojection_error_px": 0.55,
+      "heuristic_risk": 0.4133,
+      "center": [
+        -0.023620664179759204,
+        0.7262039283000968,
+        0.02310842101672746
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:0:1",
+      "points": 10,
+      "mean_observations": 4.8,
+      "direction_diversity": 0.4797,
+      "reprojection_error_px": 0.45,
+      "heuristic_risk": 0.4105,
+      "center": [
+        -0.0207228262444872,
+        -0.74042335152786,
+        -0.04762323739377507
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:1:1",
+      "points": 5,
+      "mean_observations": 4.4,
+      "direction_diversity": 0.5505,
+      "reprojection_error_px": 0.5,
+      "heuristic_risk": 0.4042,
+      "center": [
+        -0.029091299333614852,
+        -0.06509467767134444,
+        0.018256403577037526
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "0:0:0",
+      "points": 8,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.4607,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3746,
+      "center": [
+        -0.6350548506437598,
+        -0.7620458136546056,
+        -0.29029305798047156
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "0:0:1",
+      "points": 9,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.5158,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3581,
+      "center": [
+        -0.5982627949886584,
+        -0.5989937174955166,
+        0.042659239301091736
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "0:1:0",
+      "points": 5,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.5272,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3547,
+      "center": [
+        -0.6777654207701655,
+        0.17964232212518225,
+        -0.27059713025706295
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "0:2:0",
+      "points": 4,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.5339,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3526,
+      "center": [
+        -0.6289337683425728,
+        0.6007370790082824,
+        -0.33960407529664616
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "low"
+    },
+    {
+      "region": "0:0:2",
+      "points": 11,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.5537,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3467,
+      "center": [
+        -0.644182689362633,
+        -0.587330180915735,
+        0.32663151183496947
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "0:1:1",
+      "points": 3,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.5558,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3461,
+      "center": [
+        -0.7522668861028524,
+        -0.07255953868305687,
+        0.007692032917280119
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "low"
+    },
+    {
+      "region": "0:2:1",
+      "points": 6,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.6024,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3321,
+      "center": [
+        -0.5644152974551745,
+        0.7660308601392232,
+        0.009884403283071738
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "0:1:2",
+      "points": 6,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.6138,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3287,
+      "center": [
+        -0.6906399443548334,
+        0.013370542254471651,
+        0.33676138486061175
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:2:2",
+      "points": 6,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.6519,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3173,
+      "center": [
+        -0.13134941565469574,
+        0.7687014967387467,
+        0.30735339216867447
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "0:2:2",
+      "points": 8,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.6626,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.314,
+      "center": [
+        -0.5945868402950335,
+        0.763323447069289,
+        0.3168745568307524
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    }
+  ],
+  "synthetic_after_regions": [
+    {
+      "region": "2:0:0",
+      "points": 6,
+      "mean_observations": 4.0,
+      "direction_diversity": 0.5522,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.4375,
+      "center": [
+        0.7219308614509296,
+        -0.6149055758108263,
+        -0.33577263947485664
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "2:2:0",
+      "points": 9,
+      "mean_observations": 4.0,
+      "direction_diversity": 0.5666,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.4332,
+      "center": [
+        0.6782739443364245,
+        0.7260859344551454,
+        -0.30847779504195466
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "2:1:0",
+      "points": 11,
+      "mean_observations": 4.0,
+      "direction_diversity": 0.5773,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.43,
+      "center": [
+        0.5970536356346247,
+        0.0005337862308603114,
+        -0.32535384992117194
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:0:0",
+      "points": 9,
+      "mean_observations": 4.444,
+      "direction_diversity": 0.538,
+      "reprojection_error_px": 0.6889,
+      "heuristic_risk": 0.4217,
+      "center": [
+        0.057012918567400206,
+        -0.7380288654490094,
+        -0.31826517258338644
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:2:0",
+      "points": 7,
+      "mean_observations": 4.286,
+      "direction_diversity": 0.5668,
+      "reprojection_error_px": 0.7286,
+      "heuristic_risk": 0.4202,
+      "center": [
+        0.11392716218723918,
+        0.5501338131239557,
+        -0.39084476477434904
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "2:0:1",
+      "points": 8,
+      "mean_observations": 4.0,
+      "direction_diversity": 0.6165,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.4182,
+      "center": [
+        0.5714057368678986,
+        -0.6306792786595071,
+        0.004305179589758873
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "2:2:1",
+      "points": 4,
+      "mean_observations": 4.0,
+      "direction_diversity": 0.6373,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.412,
+      "center": [
+        0.6400157044934629,
+        0.4237778291868866,
+        -0.0032995585537579086
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "low"
+    },
+    {
+      "region": "2:1:1",
+      "points": 6,
+      "mean_observations": 4.0,
+      "direction_diversity": 0.6433,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.4102,
+      "center": [
+        0.7829892551243219,
+        0.049256606162796666,
+        0.03703122084592512
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "2:0:2",
+      "points": 5,
+      "mean_observations": 4.0,
+      "direction_diversity": 0.6521,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.4075,
+      "center": [
+        0.7544265376981476,
+        -0.7329549972754589,
+        0.29852833937588874
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:1:0",
+      "points": 6,
+      "mean_observations": 5.0,
+      "direction_diversity": 0.5582,
+      "reprojection_error_px": 0.55,
+      "heuristic_risk": 0.391,
+      "center": [
+        0.05254625656479317,
+        0.04256075702841392,
+        -0.297084318557018
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "2:1:2",
+      "points": 7,
+      "mean_observations": 4.0,
+      "direction_diversity": 0.7078,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.3908,
+      "center": [
+        0.7991025601440296,
+        0.13690287288928732,
+        0.33353576361499127
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "2:2:2",
+      "points": 7,
+      "mean_observations": 4.0,
+      "direction_diversity": 0.7122,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.3895,
+      "center": [
+        0.6482835998283126,
+        0.6215516840896108,
+        0.3848095039748202
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:1:2",
+      "points": 4,
+      "mean_observations": 4.0,
+      "direction_diversity": 0.7222,
+      "reprojection_error_px": 0.8,
+      "heuristic_risk": 0.3865,
+      "center": [
+        0.21482164107883955,
+        -0.14480597549941526,
+        0.3592281170184908
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "low"
+    },
+    {
+      "region": "1:0:1",
+      "points": 10,
+      "mean_observations": 5.4,
+      "direction_diversity": 0.5168,
+      "reprojection_error_px": 0.45,
+      "heuristic_risk": 0.3856,
+      "center": [
+        -0.0207228262444872,
+        -0.74042335152786,
+        -0.04762323739377507
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:0:2",
+      "points": 4,
+      "mean_observations": 5.0,
+      "direction_diversity": 0.6008,
+      "reprojection_error_px": 0.55,
+      "heuristic_risk": 0.3782,
+      "center": [
+        0.04562628653186951,
+        -0.7204326376481212,
+        0.34538432236401806
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "low"
+    },
+    {
+      "region": "0:0:0",
+      "points": 8,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.4607,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3746,
+      "center": [
+        -0.6350548506437598,
+        -0.7620458136546056,
+        -0.29029305798047156
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:1:1",
+      "points": 5,
+      "mean_observations": 5.2,
+      "direction_diversity": 0.5959,
+      "reprojection_error_px": 0.5,
+      "heuristic_risk": 0.3708,
+      "center": [
+        -0.029091299333614852,
+        -0.06509467767134444,
+        0.018256403577037526
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:2:1",
+      "points": 6,
+      "mean_observations": 5.0,
+      "direction_diversity": 0.6398,
+      "reprojection_error_px": 0.55,
+      "heuristic_risk": 0.3665,
+      "center": [
+        -0.023620664179759204,
+        0.7262039283000968,
+        0.02310842101672746
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "0:0:1",
+      "points": 9,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.5158,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3581,
+      "center": [
+        -0.5982627949886584,
+        -0.5989937174955166,
+        0.042659239301091736
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "0:1:0",
+      "points": 5,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.5272,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3547,
+      "center": [
+        -0.6777654207701655,
+        0.17964232212518225,
+        -0.27059713025706295
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "0:2:0",
+      "points": 4,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.5339,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3526,
+      "center": [
+        -0.6289337683425728,
+        0.6007370790082824,
+        -0.33960407529664616
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "low"
+    },
+    {
+      "region": "0:0:2",
+      "points": 11,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.5537,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3467,
+      "center": [
+        -0.644182689362633,
+        -0.587330180915735,
+        0.32663151183496947
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "0:1:1",
+      "points": 3,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.5558,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3461,
+      "center": [
+        -0.7522668861028524,
+        -0.07255953868305687,
+        0.007692032917280119
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "low"
+    },
+    {
+      "region": "0:2:1",
+      "points": 6,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.6024,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3321,
+      "center": [
+        -0.5644152974551745,
+        0.7660308601392232,
+        0.009884403283071738
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "0:1:2",
+      "points": 6,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.6138,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3287,
+      "center": [
+        -0.6906399443548334,
+        0.013370542254471651,
+        0.33676138486061175
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "1:2:2",
+      "points": 6,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.6519,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.3173,
+      "center": [
+        -0.13134941565469574,
+        0.7687014967387467,
+        0.30735339216867447
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    },
+    {
+      "region": "0:2:2",
+      "points": 8,
+      "mean_observations": 6.0,
+      "direction_diversity": 0.6626,
+      "reprojection_error_px": 0.3,
+      "heuristic_risk": 0.314,
+      "center": [
+        -0.5945868402950335,
+        0.763323447069289,
+        0.3168745568307524
+      ],
+      "capture_from": "후보 위치 미확인",
+      "direction_vector": null,
+      "confidence": "unvalidated"
+    }
+  ]
+}
