@@ -1,6 +1,6 @@
 # 촬영 안내 PoC 실행
 
-구현 기준: [기능 명세](../docs/func-specs.md), [기술 명세](../docs/tech-specs.md).
+구현 기준: [기능 명세](func-specs.md), [기술 명세](tech-specs.md).
 Mac API, 실제 영상용 FFmpeg → COLMAP → 영역 분석, SwiftUI 촬영 앱, P1 운영자 도구를 제공한다.
 **실제 장면의 P0/P1 완료 판정은 아직 하지 않았다.** 합성 데모·고정 fixture 테스트는 실제 영상 검증을 대신하지 않는다.
 
@@ -66,7 +66,7 @@ iOS 17 이상이 필요하며, 시뮬레이터에는 후면 실제 카메라가 
 1. Mac 주소와 개발 토큰 입력 → 연결 확인. 프로젝트가 생성된다.
 2. 최초 A 촬영 → 영상 미리보기 → 업로드 → 분석 시작.
 3. 작업 진행에서 단계·경과 시간 확인. 전경에서 2초마다 조회하며 완료·실패 시 중지한다.
-4. 보완 안내에서 주황 영역 상자와 촬영 문구 확인 → 보완 B 촬영 → 업로드 → 분석 시작. 후보 위치·자세가 없어 축 화살표는 표시하지 않는다. 시점 선택기 v2의 입력 조건은 [새 안내 설계](../docs/guidance-v2.md)를 따른다.
+4. 보완 안내에서 주황 영역 상자와 촬영 문구 확인 → 보완 B 촬영 → 업로드 → 분석 시작. 후보 위치·자세가 없어 축 화살표는 표시하지 않는다. 자동 촬영 시점 선택은 제공하지 않는다.
 5. 작업 진행의 `최초 A` / `최초+보완 A+B`로 각 결과를 조회한다. 실패 시 새 작업으로 재시도한다.
 6. Mac에서 P1 작업을 실행한 뒤 앱의 `Mac 3DGS 준비 상태 갱신`을 누르면 상태·운영자 기록을 확인할 수 있다.
 
@@ -178,7 +178,7 @@ xcodebuild -project ios/CaptureGuide.xcodeproj -scheme CaptureGuide -sdk iphoneo
 테스트는 입력·인증·크기 제한·프로젝트 귀속·잠금·상태 저장·재시작·실패·시간 제한·2D 상자·방향·좌표 정렬과
 fixture 외부 명령으로 구성한 파이프라인 연결을 검사한다. 실제 COLMAP 또는 Brush 성공을 검증하지 않는다.
 
-실제 장면 체크는 [검증 기록](VALIDATION.md)에 남긴다.
+실제 장면 체크는 [검증 기록](validation.md)에 남긴다.
 
 구현 참고: [COLMAP CLI](https://colmap.github.io/cli.html), [Brush](https://github.com/ArthurBrussee/brush),
 [Apple SDR/HDR 설정](https://developer.apple.com/documentation/avfoundation/avcapturedevice/automaticallyadjustsvideohdrenabled),

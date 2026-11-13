@@ -1,0 +1,95 @@
+{
+  "kind": "saved_evidence_audit",
+  "runs": {
+    "initial": {
+      "input_frames": 60,
+      "registered_frames": 40,
+      "registration_ratio": 0.6666666666666666,
+      "sparse_points": 7581,
+      "candidate_count": 3,
+      "report_checks": "passed"
+    },
+    "combined": {
+      "input_frames": 100,
+      "registered_frames": 100,
+      "registration_ratio": 1.0,
+      "sparse_points": 24783,
+      "candidate_count": 3,
+      "report_checks": "passed"
+    }
+  },
+  "initial_frame_change": {
+    "initially_unregistered": [
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000001.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000002.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000003.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000004.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000005.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000006.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000007.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000008.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000009.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000010.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000011.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000012.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000013.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000014.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000015.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000016.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000017.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000018.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000019.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000020.jpg"
+    ],
+    "recovered_initial": [
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000001.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000002.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000003.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000004.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000005.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000006.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000007.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000008.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000009.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000010.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000011.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000012.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000013.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000014.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000015.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000016.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000017.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000018.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000019.jpg",
+      "cb872d5d-6b34-4802-b03e-f6672f22bbdb/000020.jpg"
+    ],
+    "lost_initial": [],
+    "still_unregistered": []
+  },
+  "supplement_registered": 40,
+  "guided_recapture_effect": "not_measured",
+  "limitations": [
+    "Registration is not surface completeness or rendering quality.",
+    "Region IDs and point IDs are not comparable across independent SfM runs.",
+    "PNG signature and box bounds do not establish semantic correctness."
+  ],
+  "source_sha256": {
+    "summary.json": "2ba3efea6d47562e859999b9f4355443f5999364d35e14aadb9da49b15ec72fc",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/ac32510b-f61d-40e2-b94a-c0906fb1092c/frames.json": "b83e78e4f21aac5c88b4bca931855aea055d3a70073717435f10dbed2b52d271",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/ac32510b-f61d-40e2-b94a-c0906fb1092c/colmap/text/images.txt": "fcc966aaa7d5f2ef0845202d5ad1fea1ea2d99e895418a30707b6b04b172667f",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/ac32510b-f61d-40e2-b94a-c0906fb1092c/colmap/text/points3D.txt": "e85a9cb074680727e637fff235d36e76d1093b7b2ea9d2f3c42f17416159c000",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/ac32510b-f61d-40e2-b94a-c0906fb1092c/analysis/report.json": "2132069a61d051bac93dc7cb55ab0ac954f32481a37481bea0f03884c8b12a87",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/ac32510b-f61d-40e2-b94a-c0906fb1092c/analysis/assets.json": "1c4e8003e4063ecfff1d74c5fb24fc402baa27503eef88616b4c0dbd224a999a",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/ac32510b-f61d-40e2-b94a-c0906fb1092c/analysis/0b95eb9c-5fe9-4f45-843d-e88748f1541c.png": "d28c1e55877890ca24dfce31d0b71860c004bae121ea2031e6084ee7c2e01835",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/ac32510b-f61d-40e2-b94a-c0906fb1092c/analysis/4e931b16-9052-4cee-84b2-6c51362fc3d3.png": "69a8f45c2d91b47ddc6c43c52b44323f7a54fc6a872b54a5f4b7578d921b1a46",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/ac32510b-f61d-40e2-b94a-c0906fb1092c/analysis/68d2cf60-dc95-473c-909f-9da59fe084ac.png": "2c22d4374e0fe6a4f06cebb0a9d9abe139c71ece4958d51444baa913853363a7",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/0fecc6e5-4da1-407b-ad88-34a51ed646be/frames.json": "a88c796f7cf6646e8614e79059eda06b96544ba760ed0b87f16023a717c19232",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/0fecc6e5-4da1-407b-ad88-34a51ed646be/colmap/text/images.txt": "1435ec0efda80c8db501430377abd2fb002c78cd326474a9dff70bfe05b18c41",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/0fecc6e5-4da1-407b-ad88-34a51ed646be/colmap/text/points3D.txt": "708b539cdaed055170be00637dc0514a8811ba002c960ea2fec6197aa706e386",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/0fecc6e5-4da1-407b-ad88-34a51ed646be/analysis/report.json": "b8356d456665b72b6fbf91edf0165ada22138b59c451c87734bc0db78b2f398b",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/0fecc6e5-4da1-407b-ad88-34a51ed646be/analysis/assets.json": "a606415b951c3d413035d49efa61a16c669fc166029f5813471a75e2f85d2661",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/0fecc6e5-4da1-407b-ad88-34a51ed646be/analysis/ab6e9591-5250-43ec-b4a9-1f5ae3fd9964.png": "2e75165925fe09d05c416ce4959714980d4b9f6629d4515a7a2434261f3b9bbe",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/0fecc6e5-4da1-407b-ad88-34a51ed646be/analysis/745d2a24-5c23-4982-9bd6-cb0530ad4c62.png": "e191c24e4e9f35558013f2ced45a98b69794b29cbfea34847ea0dc393ec2e970",
+    "api-data/e42b9ea5-59d2-4725-a354-1b5223b0a129/runs/0fecc6e5-4da1-407b-ad88-34a51ed646be/analysis/437f93f4-094d-4998-a0cc-4e495e0267a1.png": "f7d105ea5fb7a682be8a34f46a916e9306de21f3e0488db728925a1e2c5e82ab"
+  }
+}

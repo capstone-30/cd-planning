@@ -1,9 +1,9 @@
 """Rebuild poc/data/core-check from the public Mip-NeRF 360 `room` images.
 
-Reproduces the 2026-11-10 core check (CORE_POC_RESULT.md) whose original scripts were not committed:
+Reproduces the 2026-11-10 core check (docs/reports/core-poc-result.md) whose original scripts were not committed:
 first 60 sorted images -> 30 s clip A, next 40 -> 20 s clip B (0.5 s per image, 960x640 H.264),
 real API upload/analysis through FastAPI TestClient, COLMAP undistortion of both runs, and the
-A+B -> A camera similarity that evaluate_guidance.py reads from summary.json.
+A+B -> A camera similarity recorded in summary.json.
 Stills stitched into clips are not a smartphone capture or a guided recapture.
 """
 import argparse

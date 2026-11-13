@@ -6,7 +6,7 @@
 
 ## 입력과 실행 조건
 
-- 원 데이터: [Mip-NeRF 360](https://jonbarron.info/mipnerf360/)의 실내 `room` 장면. [Hugging Face 미러](https://huggingface.co/datasets/YuanhaoXD/Mip-NeRF360/tree/main/room/images_4)에서 정렬된 첫 100장의 실사 이미지를 받았다. 다운로드 revision과 각 파일의 SHA256을 [source-manifest.json](data/core-check/source-manifest.json)에 보존하고 배포된 LFS SHA256과 일치하는지 확인했다.
+- 원 데이터: [Mip-NeRF 360](https://jonbarron.info/mipnerf360/)의 실내 `room` 장면. [Hugging Face 미러](https://huggingface.co/datasets/YuanhaoXD/Mip-NeRF360/tree/main/room/images_4)에서 정렬된 첫 100장의 실사 이미지를 받았다. 다운로드 revision과 각 파일의 SHA256을 [source-manifest.json](../../poc/data/core-check/source-manifest.json)에 보존하고 배포된 LFS SHA256과 일치하는지 확인했다.
 - A는 앞 60장, B는 다음 40장을 각 이미지당 0.5초인 H.264 영상으로 변환했다. 길이는 A 30초, B 20초다. **실사 정지 이미지를 이어 만든 영상이며 실제 스마트폰 연속 촬영 또는 추천에 따른 재촬영이 아니다.**
 - 원본 선택 해상도는 779×519이고 클립은 960×640으로 변환했다. 따라서 이 시험은 고해상도 iPhone 원본의 디코딩 부하를 대표하지 않는다.
 - API는 FastAPI TestClient로 실제 업로드·작업 생성·상태 조회·보고서·PNG 다운로드를 호출했다. HTTP 소켓·LAN·iOS 앱은 시험하지 않았다.
@@ -61,9 +61,9 @@ COLMAP 4.2.1의 하위 명령 도움말이 stderr로 출력됐다. 기존 코드
 
 실험 폴더는 `poc/data/core-check/`이며 원본·영상·로그·PLY를 로컬에 보존했다. `poc/data/`는 Git에서 제외되어 있다.
 
-- [실측 요약](data/core-check/summary.json), [API 호출·상태 기록](data/core-check/api-evidence.json), [A 렌더 점검](data/core-check/initial-render-check.json)
-- [Brush 실제 인수](data/core-check/brush-argv.json), [Brush 설정](data/core-check/brush-settings.json)
-- [API 실행 스크립트](data/core-check/run_api_check.py), [운영자 명령 실행 스크립트](data/core-check/run_brush_check.py)
+- [실측 요약](../../poc/data/core-check/summary.json), [API 호출·상태 기록](../../poc/data/core-check/api-evidence.json), [A 렌더 점검](../../poc/data/core-check/initial-render-check.json)
+- [Brush 실제 인수](../../poc/data/core-check/brush-argv.json), [Brush 설정](../../poc/data/core-check/brush-settings.json)
+- [API 실행 스크립트](../../poc/data/core-check/run_api_check.py), [운영자 명령 실행 스크립트](../../poc/data/core-check/run_brush_check.py)
 - project: `12033c82-c669-4ee8-9f62-b3c61a3740dc`
 - A run: `c18b037a-1100-49b3-895e-5301edebff12`
 - A+B run: `05adea6a-b3bb-4d73-a06b-fe07039267a0`
@@ -71,3 +71,23 @@ COLMAP 4.2.1의 하위 명령 도움말이 stderr로 출력됐다. 기존 코드
 각 run의 `logs/`에 명령 인수·종료 코드·표준 출력·오류·시간·RSS·memory pressure·swap, `analysis/`에 안내 PNG·특징, `splats/`에 PLY와 평가 렌더가 있다. 검증용 Brush 앱 묶음은 공식 실행 파일을 GUI 도구가 찾도록 로컬에서 만든 것으로 배포 패키지가 아니다.
 
 **진행 결정:** Mac에서 핵심 계산 경로가 실제 실내 영상 내용으로 동작하므로 개발을 계속 진행해도 된다. 다음 검증의 우선순위는 iPhone 실제 촬영 연결, 저장 PLY의 뷰어 확인, 동일 추가 촬영량 기준선과 독립 평가 영상을 사용하는 안내 효과 실험이다.
+
+## Windows 재현 — 2026-11-13
+
+Windows 11 / i5-14600KF / RAM 32GB / RX 7800 XT 16GB, Python 3.12.16, FFmpeg 9.0.2, COLMAP 4.2.1 CPU, Brush 0.3.0 환경에서 동일 공개 `room` 입력의 핵심 경로를 재현했다.
+
+| 항목 | 결과 |
+| --- | --- |
+| A 정합·희소 점 | 40/60장, 7,581점 |
+| A+B 정합·희소 점 | 100/100장, 24,783점 |
+| 안내 후보 A / A+B | 3 / 3개 |
+| 분석 시간 A / A+B | 32.5초 / 125.9초 |
+| A+B → A 정렬 상대 RMSE | 0.00203 |
+
+원본 이미지 100장의 배포 SHA256 일치를 확인했다. 공개 정지 이미지를 연결한 클립의 TestClient 실행이며 실기기 재촬영 시험은 아니다. 상태 표시 후속 점검은 [저장 결과 검증](capture-support-result.md), 시점 선택 비교는 [종료 기록](closed-experiments.md)을 따른다.
+
+새 경로에 핵심 분석을 재현하려면 저장소 루트에서 실행한다:
+
+```sh
+python poc/run_core_check.py --images "<room/images_4 폴더>" --manifest poc/data/core-check/source-manifest.json --core poc/data/core-check-repro
+```

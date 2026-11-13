@@ -1,0 +1,620 @@
+{
+  "scope": "Saved-photo offline paired ablation, not physical recapture",
+  "comparison": {
+    "pairs": [
+      {
+        "seed": 42,
+        "delta_psnr_db": 4.223012141978959,
+        "delta_ssim": 0.09533728952790466,
+        "improved_views": 10
+      },
+      {
+        "seed": 7,
+        "delta_psnr_db": 4.740382770814371,
+        "delta_ssim": 0.12409462229755341,
+        "improved_views": 10
+      }
+    ],
+    "results": [
+      {
+        "arm": "initial",
+        "seed": 42,
+        "views": [
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000004.jpg",
+            "reference_sha256": "e01148e96e6361666477e900e310465c4def391e824ffb65b9976b0273b6e4cf",
+            "render": "runs/initial_seed42/eval_3000/slot_000.png",
+            "render_sha256": "81420b8f8cc36236ca4a1f4a3bb6a100b153d59206b492bfe265bed0827a2f9e",
+            "psnr_db": 19.30215441223243,
+            "ssim": 0.7859669693063864,
+            "mse": 0.011743148659942014
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000008.jpg",
+            "reference_sha256": "e022fed39d7aa84439cf98b8515f5b20dd4074e3deeb3d96495818605a67d25e",
+            "render": "runs/initial_seed42/eval_3000/slot_007.png",
+            "render_sha256": "8d27526c48a535ae736e4c89b4b241593f5ce048985294dbbb48dd1ea5b04622",
+            "psnr_db": 25.04668332076276,
+            "ssim": 0.8395424822732165,
+            "mse": 0.0031284676458233603
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000012.jpg",
+            "reference_sha256": "3d6107623bdd7bd3a9c47c0462aab79e6959bb4a069bb10e9e5ecd3e9411f527",
+            "render": "runs/initial_seed42/eval_3000/slot_014.png",
+            "render_sha256": "c821d6e5f04940f873b954dcb3f3a6bc3cbd4969e458a08c99497f6fbfc03886",
+            "psnr_db": 23.911281089562696,
+            "ssim": 0.817072542530004,
+            "mse": 0.004063234534727989
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000016.jpg",
+            "reference_sha256": "2e6535874e1477cea1d5bc887c7266525320b062fdeef0d50109a7c4ffd83a84",
+            "render": "runs/initial_seed42/eval_3000/slot_021.png",
+            "render_sha256": "7d06fe017c42b023d8130d40cc6b86bb61a94b2de11d20d5543741b5adaf4ecb",
+            "psnr_db": 24.025051746584655,
+            "ssim": 0.8200561971493237,
+            "mse": 0.003958173486077216
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000020.jpg",
+            "reference_sha256": "d5d298daf07a15daf4a6c79b3d071e97f7a9620eb63b10fa3edca7e0db224a30",
+            "render": "runs/initial_seed42/eval_3000/slot_028.png",
+            "render_sha256": "b4787cfabff13b021ddf437b43b2f7078ab3f9693ec1460f05e2729f7e2eca92",
+            "psnr_db": 26.780222244583072,
+            "ssim": 0.8357653656196297,
+            "mse": 0.002098832475838423
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000024.jpg",
+            "reference_sha256": "1d7a0c409ffdc57c257e668c41d19c5a76ccdef67ca823dd2b5c4d26faebc721",
+            "render": "runs/initial_seed42/eval_3000/slot_035.png",
+            "render_sha256": "1f3fec47839b925a62e54fc9ae3984e5272a059c764e3d153130963e77997307",
+            "psnr_db": 27.318082398206,
+            "ssim": 0.8355904826818257,
+            "mse": 0.0018543502201338457
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000028.jpg",
+            "reference_sha256": "a3d7995245db59b2d74bdcf65efa1b009bfdabdc5ec129823b1f6c9310505ffc",
+            "render": "runs/initial_seed42/eval_3000/slot_042.png",
+            "render_sha256": "4637bf5885edd8b22bc37df7199f31f7dd5d9de6e2be708a3fcdf61483a307a1",
+            "psnr_db": 11.592250471204338,
+            "ssim": 0.4845676927700824,
+            "mse": 0.06930665726814139
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000032.jpg",
+            "reference_sha256": "0aebb32128e4832376345b136f746eb58f5902c06a28ee1a8efb19c4fd146900",
+            "render": "runs/initial_seed42/eval_3000/slot_049.png",
+            "render_sha256": "9a7fd1cbeffb37681aebdbfda05bb1477bc3f45932706140e40f4f590fce3f6a",
+            "psnr_db": 10.78756492283179,
+            "ssim": 0.5145060260838605,
+            "mse": 0.08341487584292968
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000036.jpg",
+            "reference_sha256": "a296c597a2eeff2b3783e3c76961b6d46edb31752528694b7ef929a0b01b9b98",
+            "render": "runs/initial_seed42/eval_3000/slot_056.png",
+            "render_sha256": "49be3582cb3aec2881c4ee2c0a294521170ae96364499531aac978f5545b62ce",
+            "psnr_db": 18.74348804510526,
+            "ssim": 0.6960536277805583,
+            "mse": 0.013355224580677614
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000040.jpg",
+            "reference_sha256": "4fa8e283461f2a2ce3ab6ec1962b95d15e6bcf3c63b26123f9a35c70d1e658fa",
+            "render": "runs/initial_seed42/eval_3000/slot_063.png",
+            "render_sha256": "388cf39f8b3f1eedcd3c0b504ed640b42ce40602ee366076192d146905c91553",
+            "psnr_db": 11.758781800328798,
+            "ssim": 0.5033242067323512,
+            "mse": 0.06669938353075897
+          }
+        ],
+        "mean_psnr_db": 19.92655604514018,
+        "mean_ssim": 0.7132445592927239
+      },
+      {
+        "arm": "supplemented",
+        "seed": 42,
+        "views": [
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000004.jpg",
+            "reference_sha256": "e01148e96e6361666477e900e310465c4def391e824ffb65b9976b0273b6e4cf",
+            "render": "runs/supplemented_seed42/eval_3000/slot_000.png",
+            "render_sha256": "c8737f7c7050843790303d4856162e121408cea2444b8d787c12b4fe51985dad",
+            "psnr_db": 20.053849162976324,
+            "ssim": 0.8045401702698787,
+            "mse": 0.009876773257045621
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000008.jpg",
+            "reference_sha256": "e022fed39d7aa84439cf98b8515f5b20dd4074e3deeb3d96495818605a67d25e",
+            "render": "runs/supplemented_seed42/eval_3000/slot_008.png",
+            "render_sha256": "caa1a54217c83d51efb5aa9f2327d7c712a6e1135b0f33e2a54e1277f3ff3e55",
+            "psnr_db": 26.755843055329812,
+            "ssim": 0.8588291534303231,
+            "mse": 0.002110647435757741
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000012.jpg",
+            "reference_sha256": "3d6107623bdd7bd3a9c47c0462aab79e6959bb4a069bb10e9e5ecd3e9411f527",
+            "render": "runs/supplemented_seed42/eval_3000/slot_016.png",
+            "render_sha256": "2031be5f39d4d5fd3cd9f7662ec3f5b6a3c6928ac6703474e1db41ba8698e9c7",
+            "psnr_db": 27.120872514685193,
+            "ssim": 0.8493950790709818,
+            "mse": 0.0019404959851575968
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000016.jpg",
+            "reference_sha256": "2e6535874e1477cea1d5bc887c7266525320b062fdeef0d50109a7c4ffd83a84",
+            "render": "runs/supplemented_seed42/eval_3000/slot_024.png",
+            "render_sha256": "363cc66d0c169286501c3c37709f9fdfcf969d8b5dd13373f7b273eb39118ff0",
+            "psnr_db": 27.4989676931439,
+            "ssim": 0.845664477171328,
+            "mse": 0.001778702152738863
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000020.jpg",
+            "reference_sha256": "d5d298daf07a15daf4a6c79b3d071e97f7a9620eb63b10fa3edca7e0db224a30",
+            "render": "runs/supplemented_seed42/eval_3000/slot_032.png",
+            "render_sha256": "f58adb86a3e150dd925c70703ac3cf1643180b8e9ccdfdf09be8f77ba032ec8f",
+            "psnr_db": 28.128780156981254,
+            "ssim": 0.8447945609471327,
+            "mse": 0.0015385867366824399
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000024.jpg",
+            "reference_sha256": "1d7a0c409ffdc57c257e668c41d19c5a76ccdef67ca823dd2b5c4d26faebc721",
+            "render": "runs/supplemented_seed42/eval_3000/slot_040.png",
+            "render_sha256": "d92b99044ee21479f57850894640f7d7aa5ba87e486b4d3d04ceeed1c4de3206",
+            "psnr_db": 28.339401759312665,
+            "ssim": 0.8448006222974275,
+            "mse": 0.0014657497340890711
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000028.jpg",
+            "reference_sha256": "a3d7995245db59b2d74bdcf65efa1b009bfdabdc5ec129823b1f6c9310505ffc",
+            "render": "runs/supplemented_seed42/eval_3000/slot_048.png",
+            "render_sha256": "fa7034238f3af9046ca3d8addecb4fabc886182a34aa4b9b2fd11082bc13014c",
+            "psnr_db": 23.52117577193151,
+            "ssim": 0.7937044001808577,
+            "mse": 0.004445109080758512
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000032.jpg",
+            "reference_sha256": "0aebb32128e4832376345b136f746eb58f5902c06a28ee1a8efb19c4fd146900",
+            "render": "runs/supplemented_seed42/eval_3000/slot_056.png",
+            "render_sha256": "6d3905e50b243ef3f87027db177637ea83879f44a2d2c6bc1956556486b07851",
+            "psnr_db": 15.30055928504122,
+            "ssim": 0.7089084289187384,
+            "mse": 0.029508291940002613
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000036.jpg",
+            "reference_sha256": "a296c597a2eeff2b3783e3c76961b6d46edb31752528694b7ef929a0b01b9b98",
+            "render": "runs/supplemented_seed42/eval_3000/slot_064.png",
+            "render_sha256": "7c8426170c783cea9f3fe9bf3953e802f4339e342ae20eca834d4d7f4281c6e1",
+            "psnr_db": 22.839315362991,
+            "ssim": 0.8122009343861731,
+            "mse": 0.005200779769825617
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000040.jpg",
+            "reference_sha256": "4fa8e283461f2a2ce3ab6ec1962b95d15e6bcf3c63b26123f9a35c70d1e658fa",
+            "render": "runs/supplemented_seed42/eval_3000/slot_072.png",
+            "render_sha256": "df7c8761783f86ff097dd037104bb335d3aa2a10de69b9b1e630f121ea7db9f5",
+            "psnr_db": 21.936917108798557,
+            "ssim": 0.722980661533444,
+            "mse": 0.006401891201097777
+          }
+        ],
+        "mean_psnr_db": 24.14956818711914,
+        "mean_ssim": 0.8085818488206286
+      },
+      {
+        "arm": "initial",
+        "seed": 7,
+        "views": [
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000004.jpg",
+            "reference_sha256": "e01148e96e6361666477e900e310465c4def391e824ffb65b9976b0273b6e4cf",
+            "render": "runs/initial_seed7/eval_3000/slot_000.png",
+            "render_sha256": "7aeb22375271f698be8185c7c510aee0805a96e7c7d8806d236ef6cb570385ee",
+            "psnr_db": 19.290951259400547,
+            "ssim": 0.7901275208367039,
+            "mse": 0.011773480641700562
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000008.jpg",
+            "reference_sha256": "e022fed39d7aa84439cf98b8515f5b20dd4074e3deeb3d96495818605a67d25e",
+            "render": "runs/initial_seed7/eval_3000/slot_007.png",
+            "render_sha256": "378560ac6d274915cff758aeeb51ccd7be46ec6fd93cac59fdb2acda3f43612d",
+            "psnr_db": 25.490474118025833,
+            "ssim": 0.8440992023450998,
+            "mse": 0.0028245716004213378
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000012.jpg",
+            "reference_sha256": "3d6107623bdd7bd3a9c47c0462aab79e6959bb4a069bb10e9e5ecd3e9411f527",
+            "render": "runs/initial_seed7/eval_3000/slot_014.png",
+            "render_sha256": "da76e7f1be9aa60112f5cc113e58064da589bc86e9ab5196ac0f5668ad5670f5",
+            "psnr_db": 24.406466103400525,
+            "ssim": 0.8202183330328291,
+            "mse": 0.003625378790384435
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000016.jpg",
+            "reference_sha256": "2e6535874e1477cea1d5bc887c7266525320b062fdeef0d50109a7c4ffd83a84",
+            "render": "runs/initial_seed7/eval_3000/slot_021.png",
+            "render_sha256": "b735ab6f2c9c40db577c41dfe42dee663069301f40cc3eb3e835b15e3d9ae0bd",
+            "psnr_db": 16.798738696610904,
+            "ssim": 0.6631482729526215,
+            "mse": 0.020899030045556172
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000020.jpg",
+            "reference_sha256": "d5d298daf07a15daf4a6c79b3d071e97f7a9620eb63b10fa3edca7e0db224a30",
+            "render": "runs/initial_seed7/eval_3000/slot_028.png",
+            "render_sha256": "d43bbe1efc874fc3aff70c1433fb12279a4afe6b3f422a38a293e6e1b186c70c",
+            "psnr_db": 26.860792453078027,
+            "ssim": 0.837083612312035,
+            "mse": 0.0020602539463597837
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000024.jpg",
+            "reference_sha256": "1d7a0c409ffdc57c257e668c41d19c5a76ccdef67ca823dd2b5c4d26faebc721",
+            "render": "runs/initial_seed7/eval_3000/slot_035.png",
+            "render_sha256": "85a3c5b4a52fff38c5f1e0ae7a754ed70e387258ef78126845b0cf519d988520",
+            "psnr_db": 27.418778971671017,
+            "ssim": 0.8361097670944965,
+            "mse": 0.001811849426401081
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000028.jpg",
+            "reference_sha256": "a3d7995245db59b2d74bdcf65efa1b009bfdabdc5ec129823b1f6c9310505ffc",
+            "render": "runs/initial_seed7/eval_3000/slot_042.png",
+            "render_sha256": "54581975deef78477b1853102b1df1c94fbf64aa2a969c06f90fea0a10b8e97c",
+            "psnr_db": 9.97563070156325,
+            "ssim": 0.3997282388132071,
+            "mse": 0.10056270108157778
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000032.jpg",
+            "reference_sha256": "0aebb32128e4832376345b136f746eb58f5902c06a28ee1a8efb19c4fd146900",
+            "render": "runs/initial_seed7/eval_3000/slot_049.png",
+            "render_sha256": "f6c0eb7dc4649e2f9f2bab31afee71589fa2167857909a236d5db72bcc650346",
+            "psnr_db": 12.36743651413472,
+            "ssim": 0.5110691850314811,
+            "mse": 0.05797708135382399
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000036.jpg",
+            "reference_sha256": "a296c597a2eeff2b3783e3c76961b6d46edb31752528694b7ef929a0b01b9b98",
+            "render": "runs/initial_seed7/eval_3000/slot_056.png",
+            "render_sha256": "6183f67b73a0cca47b4dc958612255d1d4526648e6ea3f6114b65cf737b4d3cb",
+            "psnr_db": 19.68332700808655,
+            "ssim": 0.6678853933885159,
+            "mse": 0.010756408796440691
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000040.jpg",
+            "reference_sha256": "4fa8e283461f2a2ce3ab6ec1962b95d15e6bcf3c63b26123f9a35c70d1e658fa",
+            "render": "runs/initial_seed7/eval_3000/slot_063.png",
+            "render_sha256": "3fabc96643fcf34f8cad90580000f85b8dc54f373fd7dfd1f43a935e2b7b6c9c",
+            "psnr_db": 11.7200540610888,
+            "ssim": 0.47279184512241024,
+            "mse": 0.06729682791057323
+          }
+        ],
+        "mean_psnr_db": 19.401264988706018,
+        "mean_ssim": 0.68422613709294
+      },
+      {
+        "arm": "supplemented",
+        "seed": 7,
+        "views": [
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000004.jpg",
+            "reference_sha256": "e01148e96e6361666477e900e310465c4def391e824ffb65b9976b0273b6e4cf",
+            "render": "runs/supplemented_seed7/eval_3000/slot_000.png",
+            "render_sha256": "51e8b63098c358d520e59a02c486b6ede95e3696c1fe1f0ce93daad6a5ad00dc",
+            "psnr_db": 19.708821373471643,
+            "ssim": 0.8052151463037891,
+            "mse": 0.010693450481025464
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000008.jpg",
+            "reference_sha256": "e022fed39d7aa84439cf98b8515f5b20dd4074e3deeb3d96495818605a67d25e",
+            "render": "runs/supplemented_seed7/eval_3000/slot_008.png",
+            "render_sha256": "ba05942a6937b0f7ccdd6130159976f1a66075965b78f30661303a7b983a5e5c",
+            "psnr_db": 26.410631121822167,
+            "ssim": 0.8591478209675508,
+            "mse": 0.0022852666816160143
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000012.jpg",
+            "reference_sha256": "3d6107623bdd7bd3a9c47c0462aab79e6959bb4a069bb10e9e5ecd3e9411f527",
+            "render": "runs/supplemented_seed7/eval_3000/slot_016.png",
+            "render_sha256": "797a179009ea02373bebc3016a8ece986bd317c765f79de6a0eb017af6c668b0",
+            "psnr_db": 26.691954330149024,
+            "ssim": 0.8498989401406111,
+            "mse": 0.0021419265148283394
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000016.jpg",
+            "reference_sha256": "2e6535874e1477cea1d5bc887c7266525320b062fdeef0d50109a7c4ffd83a84",
+            "render": "runs/supplemented_seed7/eval_3000/slot_024.png",
+            "render_sha256": "2b8c2c2a66b708b49c8a7e50b2627b8ae9556f0a99285f27f9a0693b1e7a7b10",
+            "psnr_db": 27.073879665439865,
+            "ssim": 0.8425521002505386,
+            "mse": 0.0019616071392694065
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000020.jpg",
+            "reference_sha256": "d5d298daf07a15daf4a6c79b3d071e97f7a9620eb63b10fa3edca7e0db224a30",
+            "render": "runs/supplemented_seed7/eval_3000/slot_032.png",
+            "render_sha256": "d3fb384c02ac0b75a02e5b92f0c496cf8544c03ffd8e62fdc774c5ddea744839",
+            "psnr_db": 27.803506488571912,
+            "ssim": 0.8416579413779353,
+            "mse": 0.0016582474996987
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000024.jpg",
+            "reference_sha256": "1d7a0c409ffdc57c257e668c41d19c5a76ccdef67ca823dd2b5c4d26faebc721",
+            "render": "runs/supplemented_seed7/eval_3000/slot_040.png",
+            "render_sha256": "28137472f83dea9a9efc35732a41c66c55e8a135cfa6c79be621d16b729ac8e7",
+            "psnr_db": 28.09484495566267,
+            "ssim": 0.8418244475693824,
+            "mse": 0.0015506561446615237
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000028.jpg",
+            "reference_sha256": "a3d7995245db59b2d74bdcf65efa1b009bfdabdc5ec129823b1f6c9310505ffc",
+            "render": "runs/supplemented_seed7/eval_3000/slot_048.png",
+            "render_sha256": "b612252ad2e9f94a82b33e80a793950152960b723fd8ec9227dd1650280e0410",
+            "psnr_db": 23.461147514692907,
+            "ssim": 0.784967905962694,
+            "mse": 0.004506976032229869
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000032.jpg",
+            "reference_sha256": "0aebb32128e4832376345b136f746eb58f5902c06a28ee1a8efb19c4fd146900",
+            "render": "runs/supplemented_seed7/eval_3000/slot_056.png",
+            "render_sha256": "f3cd0d6b740bd7b5ead00949a34bba148a7a8d2d7744fa11f2b3f166b8effd85",
+            "psnr_db": 17.214748155439572,
+            "ssim": 0.7223614592404577,
+            "mse": 0.0189900096074565
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000036.jpg",
+            "reference_sha256": "a296c597a2eeff2b3783e3c76961b6d46edb31752528694b7ef929a0b01b9b98",
+            "render": "runs/supplemented_seed7/eval_3000/slot_064.png",
+            "render_sha256": "08473f4188ba4f7626844572f115af2cf2d36aed14399b897bc6d4cf035295d2",
+            "psnr_db": 22.77077929305206,
+            "ssim": 0.8122726778863196,
+            "mse": 0.0052835043667050375
+          },
+          {
+            "source": "9ff05963-6650-4f31-8088-20f2fb5d9288/000040.jpg",
+            "reference_sha256": "4fa8e283461f2a2ce3ab6ec1962b95d15e6bcf3c63b26123f9a35c70d1e658fa",
+            "render": "runs/supplemented_seed7/eval_3000/slot_072.png",
+            "render_sha256": "da739c5344e0565487240303c62c145884b0c1c3f4345d193b137e45436cfc14",
+            "psnr_db": 22.186164696902097,
+            "ssim": 0.7233091542056544,
+            "mse": 0.006044822187342086
+          }
+        ],
+        "mean_psnr_db": 24.14164775952039,
+        "mean_ssim": 0.8083207593904934
+      }
+    ],
+    "protocol_sha256": "c82b3d0256908336d85eb79aca5d89b1afd315388401f25965c63a4576037055",
+    "manifest_sha256": "a1d45ec0bf9dcde29adc7b13a84800978550f25320f7d0d5d7c12acfab285b5f"
+  },
+  "protocol": {
+    "scope": "Single-scene saved-photo ablation; not a physical recapture or guidance trial",
+    "comparison": "60 A training images versus the same A + 10 uniformly selected B images",
+    "evaluation": "Same 10 B holdout photographs; RGB PSNR and SSIM Gaussian11 sigma1.5 crop5",
+    "caveats": [
+      "All-100-image SfM cameras/intrinsics are shared: geometry oracle, not end-to-end.",
+      "Same 7577 A-only seed points, but expressed in the shared full-data coordinate frame.",
+      "B holdouts are near the added B views; this tests local added-view coverage.",
+      "One room and two optimization seeds cannot establish generalization or guidance utility."
+    ],
+    "steps": 3000,
+    "resolution": 960,
+    "max_splats": 300000,
+    "seeds": [
+      42,
+      7
+    ],
+    "brush_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+    "manifest_sha256": "a1d45ec0bf9dcde29adc7b13a84800978550f25320f7d0d5d7c12acfab285b5f"
+  },
+  "runs": [
+    {
+      "arm": "initial",
+      "seed": 42,
+      "command": {
+        "argv": [
+          "/Users/jeong/Projects/capstone-design/poc/data/core-check/tools/brush-app-aarch64-apple-darwin/brush_app",
+          "/Users/jeong/Projects/capstone-design/poc/data/supplement-effect-gpu/datasets/initial",
+          "--total-steps",
+          "3000",
+          "--max-resolution",
+          "960",
+          "--max-splats",
+          "300000",
+          "--seed",
+          "42",
+          "--export-every",
+          "3000",
+          "--export-path",
+          "/Users/jeong/Projects/capstone-design/poc/data/supplement-effect-gpu/runs/initial_seed42",
+          "--export-name",
+          "result.ply",
+          "--eval-split-every",
+          "7",
+          "--eval-every",
+          "3000",
+          "--eval-save-to-disk"
+        ],
+        "started_at": 1794578937.5424252,
+        "returncode": 0,
+        "elapsed_seconds": 76.426,
+        "finished_at": 1794579013.968713
+      },
+      "ply_sha256": "9998d7a08e993246f5bffea88d60b01ae0ef0cf2b53146fd7b1291e5091d5b27",
+      "vertices": 19109,
+      "payload_finite": true,
+      "properties": 59,
+      "peak_sampled_process_rss_mib": 308.859375,
+      "observed_pressure": [
+        "1"
+      ]
+    },
+    {
+      "arm": "supplemented",
+      "seed": 42,
+      "command": {
+        "argv": [
+          "/Users/jeong/Projects/capstone-design/poc/data/core-check/tools/brush-app-aarch64-apple-darwin/brush_app",
+          "/Users/jeong/Projects/capstone-design/poc/data/supplement-effect-gpu/datasets/supplemented",
+          "--total-steps",
+          "3000",
+          "--max-resolution",
+          "960",
+          "--max-splats",
+          "300000",
+          "--seed",
+          "42",
+          "--export-every",
+          "3000",
+          "--export-path",
+          "/Users/jeong/Projects/capstone-design/poc/data/supplement-effect-gpu/runs/supplemented_seed42",
+          "--export-name",
+          "result.ply",
+          "--eval-split-every",
+          "8",
+          "--eval-every",
+          "3000",
+          "--eval-save-to-disk"
+        ],
+        "started_at": 1794579014.388486,
+        "returncode": 0,
+        "elapsed_seconds": 74.619,
+        "finished_at": 1794579089.00864
+      },
+      "ply_sha256": "098d23fb7cefba3b9053509fcb59ba889509a1ea4c0b411f63080a102f85bc08",
+      "vertices": 18959,
+      "payload_finite": true,
+      "properties": 59,
+      "peak_sampled_process_rss_mib": 330.078125,
+      "observed_pressure": [
+        "1"
+      ]
+    },
+    {
+      "arm": "initial",
+      "seed": 7,
+      "command": {
+        "argv": [
+          "/Users/jeong/Projects/capstone-design/poc/data/core-check/tools/brush-app-aarch64-apple-darwin/brush_app",
+          "/Users/jeong/Projects/capstone-design/poc/data/supplement-effect-gpu/datasets/initial",
+          "--total-steps",
+          "3000",
+          "--max-resolution",
+          "960",
+          "--max-splats",
+          "300000",
+          "--seed",
+          "7",
+          "--export-every",
+          "3000",
+          "--export-path",
+          "/Users/jeong/Projects/capstone-design/poc/data/supplement-effect-gpu/runs/initial_seed7",
+          "--export-name",
+          "result.ply",
+          "--eval-split-every",
+          "7",
+          "--eval-every",
+          "3000",
+          "--eval-save-to-disk"
+        ],
+        "started_at": 1794579089.459808,
+        "returncode": 0,
+        "elapsed_seconds": 74.365,
+        "finished_at": 1794579163.82511
+      },
+      "ply_sha256": "fec1de143aca3d425e229f4e39a740685ffc0c5d7764f55b0bc47b17650f0aaf",
+      "vertices": 19000,
+      "payload_finite": true,
+      "properties": 59,
+      "peak_sampled_process_rss_mib": 318.921875,
+      "observed_pressure": [
+        "1"
+      ]
+    },
+    {
+      "arm": "supplemented",
+      "seed": 7,
+      "command": {
+        "argv": [
+          "/Users/jeong/Projects/capstone-design/poc/data/core-check/tools/brush-app-aarch64-apple-darwin/brush_app",
+          "/Users/jeong/Projects/capstone-design/poc/data/supplement-effect-gpu/datasets/supplemented",
+          "--total-steps",
+          "3000",
+          "--max-resolution",
+          "960",
+          "--max-splats",
+          "300000",
+          "--seed",
+          "7",
+          "--export-every",
+          "3000",
+          "--export-path",
+          "/Users/jeong/Projects/capstone-design/poc/data/supplement-effect-gpu/runs/supplemented_seed7",
+          "--export-name",
+          "result.ply",
+          "--eval-split-every",
+          "8",
+          "--eval-every",
+          "3000",
+          "--eval-save-to-disk"
+        ],
+        "started_at": 1794579164.274198,
+        "returncode": 0,
+        "elapsed_seconds": 75.311,
+        "finished_at": 1794579239.585506
+      },
+      "ply_sha256": "83a380c411c55ddeae2c597ea1c54083f7925bce69171036af8a830d35e8b156",
+      "vertices": 18939,
+      "payload_finite": true,
+      "properties": 59,
+      "peak_sampled_process_rss_mib": 342.515625,
+      "observed_pressure": [
+        "1"
+      ]
+    }
+  ],
+  "input_check": {
+    "initial_training": 60,
+    "supplemented_training": 70,
+    "common_holdouts": 10,
+    "common_initial_images_and_poses_identical": true,
+    "common_holdout_images_and_poses_identical": true,
+    "intrinsics_identical": true,
+    "seed_cloud_identical": true,
+    "seed_points": 7577,
+    "source_map_sha256": "4cef4a1408400eaaffa72037c3af5507943a9381924ce4225dd4302e6553a978",
+    "manifest_sha256": "a1d45ec0bf9dcde29adc7b13a84800978550f25320f7d0d5d7c12acfab285b5f"
+  },
+  "environment": {
+    "python": "3.12.16 (main, Oct 25 2026, 18:24:37) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "platform": "macOS-27.2.1-arm64-arm-64bit",
+    "brush_version": "brush-cli 0.3.0",
+    "opencv": "4.12.0",
+    "numpy": "2.2.6"
+  }
+}

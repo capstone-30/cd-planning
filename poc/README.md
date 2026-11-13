@@ -1,8 +1,8 @@
 # 계획서 2안 — 최소 PoC
 
-기존 분석 CLI 안내. Mac API·영상·iOS·P1 도구는 [실행 안내](RUNBOOK.md), 완료 여부·기기 검증은 [검증 기록](VALIDATION.md)을 따른다.
+기존 분석 CLI 안내. Mac API·영상·iOS·P1 도구는 [실행 안내](../docs/runbook.md), 완료 여부·기기 검증은 [검증 기록](../docs/validation.md)을 따른다.
 
-Python 3 표준 라이브러리로 **SfM → 영역 특징 → 규칙 기반 보완 우선순위**를 계산한다. 별도 패키지 불필요. 후보 시점 선택은 [v2](../docs/guidance-v2.md)를 따른다.
+Python 3 표준 라이브러리로 **SfM → 영역 특징 → 규칙 기반 보완 우선순위**를 계산한다. 별도 패키지 불필요. 후보 시점 선택 실험은 [종료 기록](../docs/reports/closed-experiments.md)만 남겼으며 현재 CLI·서버는 보완 영역을 표시한다.
 
 저장소 루트에서 실행:
 
@@ -44,3 +44,13 @@ python3 poc/poc.py --colmap /path/to/colmap-text-model --output poc/real-output
 3. 공간 단위로 데이터를 분리해 관측 수 기준선과 학습 모델을 비교한다.
 
 현재는 영상 전처리·선명도, 학습 예측, 3DGS, 웹 뷰어 및 PSNR/SSIM/LPIPS 평가를 포함하지 않는다. SfM 축은 실내의 상하좌우와 다를 수 있다. 미관측 공간, 장애물과 접근 가능성은 추정하지 않는다. 점군 범위와 구획이 촬영마다 달라질 수 있으므로 실제 전후 비교에는 공통 좌표 정렬과 동일 구획이 필요하다.
+
+## 저장 실사 이미지의 보완 효과 비교
+
+별도 실험 CLI `check_supplement_effect.py`는 저장된 `guidance-eval/datasets/uniform`의 A 60장과 A+10장을 새로 Brush 학습한다. 두 조건은 같은 평가 사진 10장과 초기 점군을 사용한다. 선택 알고리즘 실험을 재개하는 기능은 아니다. [결과와 한계](../docs/reports/supplement-effect-result.md)를 참고한다.
+
+```sh
+poc/.venv/bin/python poc/check_supplement_effect.py --output poc/data/supplement-effect-new
+```
+
+기존 `poc/requirements.txt` 환경과 로컬 Brush 실행 파일, 저장 실험 입력이 필요하다. `--source`와 `--brush`로 경로를 지정할 수 있다. `--output`은 존재하지 않는 새 경로를 사용한다. 입력·프로토콜·해시·로그·PLY·렌더·시점별 PSNR/SSIM·전후 비교 JPG를 보존한다. Metal GPU 접근이 제한된 샌드박스에서는 실행 권한이 필요하다. 실제 촬영 안내의 효과를 측정하는 시험은 아니다.
