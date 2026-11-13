@@ -84,6 +84,13 @@ class ServerTests(unittest.TestCase):
             result = self.client.post(f'/projects/{self.project}/runs', json=dict(mode=mode, capture_ids=captures))
             self.assertEqual(result.status_code, 422, result.text)
 
+    def test_phone_page_is_public_but_api_is_not(self):
+        page = self.client.get('/', headers={'Authorization': ''})
+        self.assertEqual(page.status_code, 200)
+        self.assertIn('text/html', page.headers['content-type'])
+        self.assertEqual(self.client.get('/health', headers={'Authorization': ''}).status_code, 401)
+        self.assertEqual(self.client.post('/', headers={'Authorization': ''}).status_code, 401)
+
     def test_busy_and_results_not_ready(self):
         ids = self.captures()
         result = self.client.post(f'/projects/{self.project}/runs', json=dict(mode='initial', capture_ids=ids[:1]))

@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>촬영 안내</title>
+<style>
+:root { --bg:#f6f6f4; --card:#fff; --text:#1d1d1b; --muted:#6b6b66; --line:#e2e2dd; --accent:#e8780c; --accent-ink:#fff; --bad:#c62828; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#151514; --card:#1f1f1d; --text:#ecece8; --muted:#a3a39c; --line:#33332f; --accent:#ff9a3c; --accent-ink:#1a1a1a; --bad:#ff6b6b; --ok:#7bd88f; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font:16px/1.5 system-ui,-apple-system,"Noto Sans KR",sans-serif; }
+main { max-width:560px; margin:0 auto; padding:16px 16px 48px; }
+h1 { font-size:22px; margin:8px 0 4px; }
+h2 { font-size:17px; margin:0 0 8px; }
+.sub { color:var(--muted); font-size:14px; margin:0 0 16px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin:0 0 14px; }
+.card.off { opacity:.45; pointer-events:none; }
+.step { display:inline-block; font-size:12px; font-weight:700; color:var(--accent); letter-spacing:.04em; margin-bottom:4px; }
+button, .btn { display:block; width:100%; border:0; border-radius:10px; padding:13px 14px; font:inherit; font-weight:600; background:var(--accent); color:var(--accent-ink); margin-top:10px; cursor:pointer; text-align:center; }
+button.ghost, .btn.ghost { background:transparent; color:var(--text); border:1px solid var(--line); }
+button:disabled { opacity:.5; }
+input[type=password], input[type=text] { width:100%; padding:12px; border-radius:10px; border:1px solid var(--line); background:var(--bg); color:var(--text); font:inherit; }
+input[type=file] { display:none; }
+.row { display:flex; gap:8px; } .row > * { flex:1; }
+.msg { font-size:14px; margin-top:10px; white-space:pre-wrap; }
+.msg.bad { color:var(--bad); } .msg.ok { color:var(--ok); }
+.bar { height:8px; background:var(--line); border-radius:4px; overflow:hidden; margin-top:10px; display:none; }
+.bar > i { display:block; height:100%; width:0; background:var(--accent); transition:width .2s; }
+ul.tips { margin:6px 0 0; padding-left:18px; color:var(--muted); font-size:14px; }
+.region { border-top:1px solid var(--line); padding-top:12px; margin-top:12px; }
+.region img { width:100%; border-radius:8px; display:block; margin:6px 0; background:var(--line); min-height:60px; }
+.small { font-size:13px; color:var(--muted); }
+.stat { font-size:18px; font-weight:700; }
+</style>
+</head>
+<body>
+<main>
+  <h1>촬영 안내</h1>
+  <p class="sub">방을 찍어 올리면 PC가 3D 정합을 계산하고, 더 찍어야 할 곳을 알려줍니다.</p>
+
+  <section class="card" id="c-connect">
+    <span class="step">연결</span>
+    <h2>PC 서버 토큰</h2>
+    <input type="password" id="token" placeholder="PC 화면에 표시된 토큰" autocomplete="off">
+    <button id="b-connect">연결</button>
+    <div class="msg" id="m-connect"></div>
+  </section>
+
+  <section class="card off" id="c-a">
+    <span class="step">1단계 · 최초 촬영 A</span>
+    <h2>방 전체를 30~60초 찍기</h2>
+    <ul class="tips">
+      <li>폰을 <b>가로</b>로 들고, 기본 카메라 1배율</li>
+      <li>천천히 걸으며 방을 한 바퀴. 앞 장면과 많이 겹치게</li>
+      <li>카메라 설정: 동영상 크기 FHD 30fps, HDR10+ 끔</li>
+    </ul>
+    <div class="row">
+      <label class="btn" for="f-a-cam">촬영하기</label>
+      <label class="btn ghost" for="f-a-pick">갤러리에서</label>
+    </div>
+    <input type="file" id="f-a-cam" accept="video/*" capture="environment">
+    <input type="file" id="f-a-pick" accept="video/*">
+    <div class="bar" id="p-a"><i></i></div>
+    <div class="msg" id="m-a"></div>
+  </section>
+
+  <section class="card off" id="c-ra">
+    <span class="step">결과 A</span>
+    <div id="r-a"></div>
+  </section>
+
+  <section class="card off" id="c-b">
+    <span class="step">2단계 · 보완 촬영 B</span>
+    <h2>주황 상자 부분을 20~30초 더 찍기</h2>
+    <ul class="tips">
+      <li>위 사진의 주황 상자 영역이 화면에 계속 보이게</li>
+      <li>그 영역을 중심으로 옆으로 천천히 이동하며 다른 각도에서</li>
+      <li>최소 15초 이상 (2fps 기준 30장 필요)</li>
+    </ul>
+    <div class="row">
+      <label class="btn" for="f-b-cam">촬영하기</label>
+      <label class="btn ghost" for="f-b-pick">갤러리에서</label>
+    </div>
+    <input type="file" id="f-b-cam" accept="video/*" capture="environment">
+    <input type="file" id="f-b-pick" accept="video/*">
+    <div class="bar" id="p-b"><i></i></div>
+    <div class="msg" id="m-b"></div>
+  </section>
+
+  <section class="card off" id="c-rb">
+    <span class="step">결과 A+B</span>
+    <div id="r-b"></div>
+  </section>
+
+  <button class="ghost" id="b-reset">새 프로젝트로 처음부터</button>
+  <p class="small" id="info"></p>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const STAGES = {preprocess:'프레임 추출', sfm:'3D 정합 계산(COLMAP)', analyze:'약한 영역 분석'};
+const store = {
+  get(k){ try { return localStorage.getItem('cg.'+k); } catch { return null; } },
+  set(k,v){ try { v==null ? localStorage.removeItem('cg.'+k) : localStorage.setItem('cg.'+k,v); } catch {} },
+};
+let token = '';
+try { token = sessionStorage.getItem('cg.token') || ''; } catch {}
+$('token').value = token;
+
+function say(id, text, kind){ const m=$(id); m.textContent=text||''; m.className='msg'+(kind?' '+kind:''); }
+function enable(id, on){ $(id).classList.toggle('off', !on); }
+function errText(e){ return e && e.error ? `${e.error.message} [${e.error.code}]` : String(e && e.message || e); }
+
+async function api(path, opts={}) {
+  const headers = Object.assign({'Authorization':'Bearer '+token}, opts.headers||{});
+  const r = await fetch(path, Object.assign({}, opts, {headers}));
+  const body = r.headers.get('content-type')?.includes('json') ? await r.json() : await r.blob();
+  if (!r.ok) throw body;
+  return body;
+}
+
+function upload(projectId, role, file, barId) {
+  return new Promise((resolve, reject) => {
+    const form = new FormData(); form.append('role', role); form.append('file', file);
+    const x = new XMLHttpRequest();
+    x.open('POST', `/projects/${projectId}/captures`);
+    x.setRequestHeader('Authorization', 'Bearer '+token);
+    const bar = $(barId); bar.style.display='block';
+    x.upload.onprogress = e => { if (e.lengthComputable) bar.firstChild.style.width = (e.loaded/e.total*100)+'%'; };
+    x.onload = () => { bar.style.display='none'; let b; try { b=JSON.parse(x.responseText); } catch { b={error:{code:'HTTP_'+x.status,message:'서버 응답을 읽을 수 없습니다.'}}; }
+      x.status < 300 ? resolve(b) : reject(b); };
+    x.onerror = () => { bar.style.display='none'; reject({error:{code:'NETWORK',message:'업로드 중 연결이 끊겼습니다. 같은 Wi-Fi인지 확인하세요.'}}); };
+    x.send(form);
+  });
+}
+
+function duration(file) {
+  return new Promise(resolve => {
+    const v = document.createElement('video'); v.preload='metadata';
+    v.onloadedmetadata = () => { URL.revokeObjectURL(v.src); resolve(v.duration); };
+    v.onerror = () => resolve(NaN);
+    v.src = URL.createObjectURL(file);
+  });
+}
+
+async function ensureProject() {
+  let p = store.get('project');
+  if (!p) { p = (await api('/projects', {method:'POST'})).project_id; store.set('project', p); }
+  return p;
+}
+
+async function startRun(mode, ids) {
+  const p = await ensureProject();
+  return (await api(`/projects/${p}/runs`, {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({mode, capture_ids: ids})})).run_id;
+}
+
+async function poll(runId, msgId) {
+  const p = store.get('project');
+  for (;;) {
+    const s = await api(`/projects/${p}/runs/${runId}`);
+    const t = Math.round(s.elapsed_seconds);
+    if (s.state === 'completed') { say(msgId, `분석 완료 (${t}초)`, 'ok'); return s; }
+    if (s.state === 'failed') { say(msgId, `분석 실패 (${t}초): ${s.error.message} [${s.error.code}]\n새로 촬영해서 다시 올려주세요.`, 'bad'); return s; }
+    say(msgId, `분석 중 · ${STAGES[s.stage]||'대기'} · ${t}초 경과\n화면을 켜 둔 채 기다려 주세요. A는 1~2분, A+B는 3~4분 걸립니다.`);
+    await new Promise(r => setTimeout(r, 2000));
+  }
+}
+
+async function showReport(runId, boxId) {
+  const p = store.get('project');
+  const r = await api(`/projects/${p}/runs/${runId}/report`);
+  const box = $(boxId); box.innerHTML = '';
+  const head = document.createElement('div');
+  head.innerHTML = `<div class="stat"></div><div class="small"></div>`;
+  head.children[0].textContent = r.message;
+  head.children[1].textContent = `${r.input_frames}장 중 ${r.registered_frames}장 정합`;
+  box.append(head);
+  for (const g of r.regions.filter(g => g.recommended)) {
+    const d = document.createElement('div'); d.className='region';
+    const title = document.createElement('b'); title.textContent = `후보 ${g.rank} · 영역 ${g.region} · 점 ${g.points}개`;
+    d.append(title);
+    if (g.representative_asset_id) {
+      const img = document.createElement('img'); img.alt = '주황 상자가 보완 촬영 영역';
+      d.append(img);
+      api(`/projects/${p}/runs/${runId}/media/${g.representative_asset_id}`).then(b => img.src = URL.createObjectURL(b)).catch(()=>img.alt='이미지를 불러오지 못했습니다');
+    }
+    const ins = document.createElement('div'); ins.className='small'; ins.textContent = g.instruction || '';
+    d.append(ins); box.append(d);
+  }
+  const lim = document.createElement('ul'); lim.className='tips';
+  for (const l of r.limitations) { const li=document.createElement('li'); li.textContent=l; lim.append(li); }
+  box.append(lim);
+  return r;
+}
+
+async function handle(role, file) {
+  const isA = role === 'initial';
+  const msg = isA ? 'm-a' : 'm-b';
+  const [lo, hi] = isA ? [30, 60] : [15, 30];
+  const sec = await duration(file);
+  if (Number.isFinite(sec) && (sec < lo - .5 || sec > hi + .5)) {
+    say(msg, `영상 길이 ${sec.toFixed(1)}초 — ${lo}~${hi}초로 다시 찍어주세요.`, 'bad'); return;
+  }
+  try {
+    const p = await ensureProject();
+    say(msg, `업로드 중 (${(file.size/1048576).toFixed(0)}MB)…`);
+    const cap = await upload(p, role, file, isA ? 'p-a' : 'p-b');
+    store.set(isA ? 'capA' : 'capB', cap.capture_id);
+    const ids = isA ? [cap.capture_id] : [store.get('capA'), cap.capture_id];
+    const run = await startRun(isA ? 'initial' : 'combined', ids);
+    store.set(isA ? 'runA' : 'runAB', run);
+    if (isA) { store.set('capB', null); store.set('runAB', null); enable('c-b', false); enable('c-rb', false); }
+    const s = await poll(run, msg);
+    if (s.state === 'completed') await afterRun(isA);
+  } catch (e) { say(msg, errText(e), 'bad'); }
+}
+
+async function afterRun(isA) {
+  if (isA) {
+    enable('c-ra', true); const r = await showReport(store.get('runA'), 'r-a');
+    enable('c-b', true);
+    if (!r.regions.some(g => g.recommended)) say('m-b', '안내 근거가 부족합니다. 그래도 덜 찍힌 곳을 보완 촬영할 수 있습니다.');
+    $('c-ra').scrollIntoView({behavior:'smooth'});
+  } else {
+    enable('c-rb', true); await showReport(store.get('runAB'), 'r-b');
+    $('c-rb').scrollIntoView({behavior:'smooth'});
+  }
+}
+
+for (const [id, role] of [['f-a-cam','initial'],['f-a-pick','initial'],['f-b-cam','supplement'],['f-b-pick','supplement']]) {
+  $(id).addEventListener('change', e => { const f = e.target.files[0]; e.target.value=''; if (f) handle(role, f); });
+}
+
+async function resume() {
+  // Restore the last project's state after a reload.
+  const p = store.get('project'); if (!p) return;
+  $('info').textContent = '프로젝트 ' + p.slice(0, 8);
+  for (const [key, isA, msg] of [['runA', true, 'm-a'], ['runAB', false, 'm-b']]) {
+    const run = store.get(key); if (!run) continue;
+    try { const s = await poll(run, msg); if (s.state === 'completed') await afterRun(isA); }
+    catch (e) { if (e?.error?.code === 'NOT_FOUND') { store.set('project', null); store.set('runA', null); store.set('runAB', null); } else say(msg, errText(e), 'bad'); }
+  }
+}
+
+$('b-connect').onclick = async () => {
+  token = $('token').value.trim();
+  try { sessionStorage.setItem('cg.token', token); } catch {}
+  try {
+    const h = await api('/health');
+    const missing = Object.entries(h.tools).filter(([k,v]) => !v && k !== 'brush').map(([k]) => k);
+    say('m-connect', missing.length ? `연결됨. PC에 ${missing.join(', ')} 없음 — 분석이 실패합니다.` : (h.busy ? '연결됨 · PC가 다른 분석 중' : '연결됨'), missing.length ? 'bad' : 'ok');
+    enable('c-a', true); resume();
+  } catch (e) { say('m-connect', errText(e), 'bad'); }
+};
+$('b-reset').onclick = () => { for (const k of ['project','capA','capB','runA','runAB']) store.set(k, null); location.reload(); };
+if (token) $('b-connect').click();
+</script>
+</body>
+</html>
