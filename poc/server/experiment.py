@@ -189,7 +189,7 @@ def main():
                 reason=args.reason, view_mode=args.view_mode, alignment=alignment['state'],
                 message='운영자 육안 관찰. 정량 품질·인과 효과 평가가 아닙니다.', recorded_at=time.time())
             save(folder/'comparison.json', result)
-            (folder/'observations.md').write_text(f"# 3DGS 육안 관찰\n\n판단: {args.judgment}\n\n{args.reason}\n\n시점: {args.view_mode}\n\n{result['message']}\n")
+            (folder/'observations.md').write_text(f"# 3DGS 육안 관찰\n\n판단: {args.judgment}\n\n{args.reason}\n\n시점: {args.view_mode}\n\n{result['message']}\n", encoding='utf-8')
             with store.metadata():
                 metadata = load(project/'project.json')
                 metadata['comparison'] = result

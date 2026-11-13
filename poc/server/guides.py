@@ -28,7 +28,7 @@ def make_report(run, input_frames, run_id):
     cameras, points = read_model(model)
     _, images = read_images(model)
     rows = analyze(cameras, points, bins=3)
-    point_ids = [int(line.split()[0]) for line in (model/'points3D.txt').read_text().splitlines()
+    point_ids = [int(line.split()[0]) for line in (model/'points3D.txt').read_text(encoding='utf-8').splitlines()
                  if line.strip() and not line.startswith('#')]
     lo = [min(p[0][i] for p in points) for i in range(3)]
     span = [max(p[0][i] for p in points)-lo[i] for i in range(3)]
@@ -78,7 +78,7 @@ def make_report(run, input_frames, run_id):
                   limitations=LIMITATIONS, message='추가 촬영 영역 후보' if recommended else '안내 근거 부족')
     save(output/'report.json', result)
     save(output/'assets.json', assets)
-    with (output/'features.csv').open('w', newline='') as stream:
+    with (output/'features.csv').open('w', newline='', encoding='utf-8') as stream:
         writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows({k: row.get(k) for k in writer.fieldnames} for row in rows)

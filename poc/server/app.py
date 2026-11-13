@@ -16,7 +16,7 @@ from starlette.formparsers import MultiPartException
 
 from .pipeline import DEFAULTS, execute, probe
 from .runner import Runner
-from .store import Failure, Store, free_space, ident, load, release, save
+from .store import Failure, Store, free_space, ident, load, lock_file, release, save
 
 MAX_VIDEO_BYTES = 250 * 1024**2
 
@@ -81,10 +81,9 @@ def create_app(root=None, token=None, config=None, processor=execute):
     async def lifespan(app):
         nonlocal server_lock
         # Prevent a second API process from recovering a live process's jobs.
-        import fcntl
         server_lock = (store.root/'.server.lock').open('a')
         try:
-            fcntl.flock(server_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            lock_file(server_lock, blocking=False)
             resource_lock = store.acquire()
             try:
                 store.recover()

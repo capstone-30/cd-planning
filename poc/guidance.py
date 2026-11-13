@@ -18,7 +18,7 @@ def posed_candidates(model, approved_names):
     model = Path(model)
     _, images = read_images(model)
     intrinsics = {}
-    for line in (model/'cameras.txt').read_text().splitlines():
+    for line in (model/'cameras.txt').read_text(encoding='utf-8').splitlines():
         if not line.strip() or line.startswith('#'):
             continue
         cid, kind, width, height, *values = line.split()

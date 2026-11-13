@@ -16,12 +16,26 @@ def sample(pid):
             return subprocess.check_output(args, text=True, stderr=subprocess.DEVNULL, timeout=2).strip()
         except (OSError, subprocess.SubprocessError):
             return None
-    rss = output(['/bin/ps', '-o', 'rss=', '-p', str(pid)])
+    if os.name == 'nt':
+        row = output(['tasklist', '/FI', f'PID eq {pid}', '/FO', 'CSV', '/NH']) or ''
+        digits = ''.join(ch for ch in row.rsplit(',"', 1)[-1] if ch.isdigit()) if row.startswith('"') else ''
+        rss = digits or None
+    else:
+        rss = output(['/bin/ps', '-o', 'rss=', '-p', str(pid)])
     result = dict(time=time.time(), process_rss_kb=rss)
     if sys.platform == 'darwin':
         result['pressure'] = output(['/usr/sbin/sysctl', '-n', 'kern.memorystatus_vm_pressure_level'])
         result['swap'] = output(['/usr/sbin/sysctl', '-n', 'vm.swapusage'])
     return result
+
+
+def terminate(process, force=False):
+    if os.name == 'nt':
+        # /T also ends child processes, matching the POSIX process-group kill.
+        subprocess.run(['taskkill', '/T', '/F', '/PID', str(process.pid)],
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    else:
+        os.killpg(process.pid, signal.SIGKILL if force else signal.SIGTERM)
 
 
 class Runner:
@@ -40,7 +54,7 @@ class Runner:
         process = None
         pressure_since = None
         try:
-            with stem.with_suffix('.stdout').open('wb') as out, stem.with_suffix('.stderr').open('wb') as err, stem.with_suffix('.resources.jsonl').open('w') as metrics:
+            with stem.with_suffix('.stdout').open('wb') as out, stem.with_suffix('.stderr').open('wb') as err, stem.with_suffix('.resources.jsonl').open('w', encoding='utf-8') as metrics:
                 process = subprocess.Popen(list(map(str, args)), stdout=out, stderr=err, start_new_session=True, cwd=cwd)
                 while process.poll() is None:
                     now = time.monotonic()
@@ -66,15 +80,15 @@ class Runner:
             raise Failure('TOOL_UNAVAILABLE', '필요한 실행 도구를 찾거나 시작할 수 없습니다.', str(stem.name)) from error
         finally:
             if process and process.poll() is None:
-                os.killpg(process.pid, signal.SIGTERM)
+                terminate(process)
                 try:
                     process.wait(timeout=3)
                 except subprocess.TimeoutExpired:
-                    os.killpg(process.pid, signal.SIGKILL)
+                    terminate(process, force=True)
                     process.wait()
             record.update(elapsed_seconds=round(time.monotonic()-start, 3), finished_at=time.time())
             save(stem.with_suffix('.command.json'), record)
-        output = stem.with_suffix('.stdout').read_text(errors='replace')
+        output = stem.with_suffix('.stdout').read_text(encoding='utf-8', errors='replace')
         if include_stderr:
-            output += '\n' + stem.with_suffix('.stderr').read_text(errors='replace')
+            output += '\n' + stem.with_suffix('.stderr').read_text(encoding='utf-8', errors='replace')
         return output

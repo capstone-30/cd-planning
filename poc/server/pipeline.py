@@ -173,7 +173,7 @@ def execute(run, project, captures, config):
     except Exception as error:
         if not isinstance(error, Failure):
             import traceback
-            (run/'logs/error.txt').write_text(traceback.format_exc())
+            (run/'logs/error.txt').write_text(traceback.format_exc(), encoding='utf-8')
             error = Failure('PROCESSING_FAILED', '처리에 실패했습니다. Mac의 error.txt를 확인하세요.', 'error.txt')
         status.update(state='failed', finished_at=time.time(), error=dict(code=error.code,
             message=error.message, log=f'logs/{error.log}' if error.log else None))

@@ -12,7 +12,7 @@ def read_images(folder):
     cameras = {}
     images = {}
     # images.txt alternates image metadata and a (possibly empty) POINTS2D line.
-    lines = iter((folder / 'images.txt').read_text().splitlines())
+    lines = iter((folder / 'images.txt').read_text(encoding='utf-8').splitlines())
     for line in lines:
         if not line.strip() or line.startswith('#'):
             continue
@@ -48,7 +48,7 @@ def read_images(folder):
 def read_model(folder):
     cameras, _ = read_images(folder)
     points = []
-    for line in (folder / 'points3D.txt').read_text().splitlines():
+    for line in (folder / 'points3D.txt').read_text(encoding='utf-8').splitlines():
         if not line.strip() or line.startswith('#'):
             continue
         v = line.split()
@@ -127,8 +127,8 @@ def write_report(output, cameras, points, source, after=None, bins=3):
                                'No image sharpness feature'], regions=rows)
     if after is not None:
         result['synthetic_after_regions'] = analyze(cameras, after, bins)
-    (output/'report.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
-    with (output/'features.csv').open('w', newline='') as f:
+    (output/'report.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n', encoding='utf-8')
+    with (output/'features.csv').open('w', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
@@ -144,7 +144,7 @@ def write_report(output, cameras, points, source, after=None, bins=3):
         a = sum(r['heuristic_risk'] for r in rows)/len(rows)
         b = sum(r['heuristic_risk'] for r in result['synthetic_after_regions'])/len(rows)
         lines += ['', f'합성 관측 추가 전후 평균 규칙 점수: {a:.4f} → {b:.4f}. 관측 수를 인위적으로 추가한 계산 예시이며 복원 품질 개선 실험이 아닙니다.']
-    (output/'report.md').write_text('\n'.join(lines)+'\n')
+    (output/'report.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
     return rows
 
 

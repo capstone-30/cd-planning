@@ -1,4 +1,3 @@
-import fcntl
 import json
 import os
 import shutil
@@ -8,6 +7,33 @@ from contextlib import contextmanager
 from pathlib import Path
 from uuid import UUID, uuid4
 
+if os.name == 'nt':
+    import msvcrt
+
+    def lock_file(stream, blocking=True):
+        """Lock byte 0 of the handle; raises BlockingIOError like flock(LOCK_NB)."""
+        while True:
+            stream.seek(0)
+            try:
+                msvcrt.locking(stream.fileno(), msvcrt.LK_NBLCK, 1)
+                return
+            except OSError:
+                if not blocking:
+                    raise BlockingIOError('locked') from None
+                time.sleep(.05)
+
+    def unlock_file(stream):
+        stream.seek(0)
+        msvcrt.locking(stream.fileno(), msvcrt.LK_UNLCK, 1)
+else:
+    import fcntl
+
+    def lock_file(stream, blocking=True):
+        fcntl.flock(stream, fcntl.LOCK_EX | (0 if blocking else fcntl.LOCK_NB))
+
+    def unlock_file(stream):
+        fcntl.flock(stream, fcntl.LOCK_UN)
+
 
 class Failure(Exception):
     def __init__(self, code, message, log=None):
@@ -16,7 +42,7 @@ class Failure(Exception):
 
 
 def load(path):
-    return json.loads(Path(path).read_text())
+    return json.loads(Path(path).read_text(encoding='utf-8'))
 
 
 def save(path, value):
@@ -24,7 +50,7 @@ def save(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, temporary = tempfile.mkstemp(prefix='.', dir=path.parent)
     try:
-        with os.fdopen(fd, 'w') as stream:
+        with os.fdopen(fd, 'w', encoding='utf-8') as stream:
             json.dump(value, stream, ensure_ascii=False, indent=2, allow_nan=False)
             stream.write('\n')
             stream.flush()
@@ -88,7 +114,7 @@ class Store:
     def acquire(self):
         stream = (self.root / '.worker.lock').open('a')
         try:
-            fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            lock_file(stream, blocking=False)
         except BlockingIOError:
             stream.close()
             raise Failure('BUSY', '다른 분석 또는 복원이 실행 중입니다.') from None
@@ -97,13 +123,13 @@ class Store:
     @contextmanager
     def metadata(self):
         with (self.root/'.metadata.lock').open('a') as stream:
-            fcntl.flock(stream, fcntl.LOCK_EX)
+            lock_file(stream)
             try:
                 yield
             finally:
-                fcntl.flock(stream, fcntl.LOCK_UN)
+                unlock_file(stream)
 
 
 def release(stream):
-    fcntl.flock(stream, fcntl.LOCK_UN)
+    unlock_file(stream)
     stream.close()
