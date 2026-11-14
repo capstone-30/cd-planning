@@ -9,8 +9,8 @@ from .pipeline import DEFAULTS
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='신뢰하는 LAN에서만 실행하세요. 포트 포워딩 금지.')
-    parser.add_argument('--host', default='127.0.0.1', help='실기기는 Mac의 사설 LAN IP 사용')
+    parser = argparse.ArgumentParser(description='Tailscale 또는 신뢰하는 LAN에서만 실행하세요. 포트 포워딩 금지.')
+    parser.add_argument('--host', default='127.0.0.1', help='실기기는 PC의 Tailscale IP(100.x) 또는 사설 LAN IP 사용')
     parser.add_argument('--port', type=int, default=8080)
     parser.add_argument('--data')
     parser.add_argument('--initial-frames', type=int, choices=range(30, 81), default=DEFAULTS['initial_frames'])
@@ -19,8 +19,11 @@ if __name__ == '__main__':
     parser.add_argument('--blur-threshold', type=float, default=0)
     parser.add_argument('--matcher', choices=('sequential', 'exhaustive'), default='sequential')
     args = parser.parse_args()
-    if not ipaddress.ip_address(socket.gethostbyname(args.host)).is_private or args.host == '0.0.0.0':
-        parser.error('localhost 또는 신뢰하는 LAN의 사설 IP를 지정하세요.')
+    address = ipaddress.ip_address(socket.gethostbyname(args.host))
+    # Tailscale tailnet addresses (100.64.0.0/10) are reachable only by your own signed-in devices.
+    tailnet = address.version == 4 and address in ipaddress.ip_network('100.64.0.0/10')
+    if not (address.is_private or tailnet) or args.host == '0.0.0.0':
+        parser.error('localhost, 신뢰하는 LAN의 사설 IP 또는 Tailscale IP(100.x)를 지정하세요.')
     if args.blur_threshold < 0 or not __import__('math').isfinite(args.blur_threshold):
         parser.error('선명도 임계값은 0 이상의 유한수여야 합니다.')
     config = {key: getattr(args, key) for key in ('initial_frames', 'supplement_frames', 'long_edge', 'blur_threshold', 'matcher')}
