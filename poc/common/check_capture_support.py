@@ -5,7 +5,7 @@ import json
 import math
 from pathlib import Path
 
-from poc import read_images, read_model
+from poc import read_images, read_points
 
 
 def registration_change(initial_input, initial_registered, combined_registered):
@@ -39,8 +39,8 @@ def audit(core):
         model = run/'colmap/text'
         record(model/'images.txt')
         record(model/'points3D.txt')
-        cameras, points = read_model(model)
-        _, images = read_images(model)
+        cameras, images = read_images(model)
+        points = list(read_points(model, cameras).values())
         registered[mode] = {v['name'] for v in images.values()}
         assert len(registered[mode]) == len(cameras), 'Duplicate registered names'
         assert registered[mode] <= inputs[mode], 'Unknown registered frames'

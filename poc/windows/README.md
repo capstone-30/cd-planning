@@ -1,13 +1,13 @@
 # Windows 서버·Brush 도구
 
-Windows에서 [공용 Python 서버](../shared-poc/README.md)를 실행하고 Brush 학습 결과를 연다. 모바일 화면과 앱 소스는 이 폴더에 포함하지 않는다.
+Windows에서 [공용 Python 서버](../common/README.md)를 실행하고 Brush 학습 결과를 연다. 모바일 화면과 앱 소스는 이 폴더에 포함하지 않는다.
 
 ## 처음 한 번만
 
-1. [공용 서버 안내](../shared-poc/README.md)를 참고해 FFmpeg·COLMAP·Brush를 설치하고 아래 Python 환경을 준비한다.
+1. [공용 서버 안내](../common/README.md)를 참고해 FFmpeg·COLMAP·Brush를 설치하고 아래 Python 환경을 준비한다.
 
    ```powershell
-   cd poc\shared-poc\poc
+   cd poc\common
    python -m venv .venv
    .venv\Scripts\python -m pip install -r requirements-dev.txt
    ```
@@ -46,4 +46,4 @@ Tailscale 주소가 있으면 `http://100.x.x.x:8080`을 우선 사용하고, �
 .\view-3d.ps1 -Only AB
 ```
 
-기본 데이터는 `../shared-poc/poc/data/`다. 학습·비교는 [공용 Brush 운영 절차](../shared-poc/docs/05-ops/runbook.md)를 따른다.
+기본 데이터는 `../common/data/`다. 학습·비교는 [공용 Brush 운영 절차](../common/docs/runbook.md)를 따른다.

@@ -97,6 +97,11 @@ ul.tips { margin:6px 0 0; padding-left:18px; color:var(--muted); font-size:14px;
 </main>
 <script>
 const $ = id => document.getElementById(id);
+const FLOWS = {
+  initial: {message:'m-a', progress:'p-a', capture:'capA', run:'runA', result:'r-a', card:'c-ra', mode:'initial', minimum:30},
+  supplement: {message:'m-b', progress:'p-b', capture:'capB', run:'runAB', result:'r-b', card:'c-rb', mode:'combined', minimum:15},
+};
+const PROJECT_KEYS = ['project', 'capA', 'capB', 'runA', 'runAB'];
 const STAGES = {preprocess:'프레임 추출', sfm:'3D 정합 계산(COLMAP)', analyze:'약한 영역 분석'};
 const store = {
   get(k){ try { return localStorage.getItem('cg.'+k); } catch { return null; } },
@@ -136,8 +141,9 @@ function upload(projectId, role, file, barId) {
 function duration(file) {
   return new Promise(resolve => {
     const v = document.createElement('video'); v.preload='metadata';
-    v.onloadedmetadata = () => { URL.revokeObjectURL(v.src); resolve(v.duration); };
-    v.onerror = () => resolve(NaN);
+    const finish = seconds => { URL.revokeObjectURL(v.src); resolve(seconds); };
+    v.onloadedmetadata = () => finish(v.duration);
+    v.onerror = () => finish(NaN);
     v.src = URL.createObjectURL(file);
   });
 }
@@ -182,7 +188,11 @@ async function showReport(runId, boxId) {
     if (g.representative_asset_id) {
       const img = document.createElement('img'); img.alt = '주황 상자가 보완 촬영 영역';
       d.append(img);
-      api(`/projects/${p}/runs/${runId}/media/${g.representative_asset_id}`).then(b => img.src = URL.createObjectURL(b)).catch(()=>img.alt='이미지를 불러오지 못했습니다');
+      api(`/projects/${p}/runs/${runId}/media/${g.representative_asset_id}`).then(b => {
+        const url = URL.createObjectURL(b);
+        img.onload = img.onerror = () => URL.revokeObjectURL(url);
+        img.src = url;
+      }).catch(()=>img.alt='이미지를 불러오지 못했습니다');
     }
     const ins = document.createElement('div'); ins.className='small'; ins.textContent = g.instruction || '';
     d.append(ins); box.append(d);
@@ -195,8 +205,9 @@ async function showReport(runId, boxId) {
 
 async function handle(role, file) {
   const isA = role === 'initial';
-  const msg = isA ? 'm-a' : 'm-b';
-  const [lo, hi] = isA ? [30, 60] : [15, 30];
+  const flow = FLOWS[role];
+  const msg = flow.message;
+  const [lo, hi] = [flow.minimum, isA ? 60 : 30];
   const sec = await duration(file);
   if (Number.isFinite(sec) && (sec < lo - .5 || sec > hi + .5)) {
     say(msg, `영상 길이 ${sec.toFixed(1)}초 — ${lo}~${hi}초로 다시 찍어주세요.`, 'bad'); return;
@@ -204,27 +215,30 @@ async function handle(role, file) {
   try {
     const p = await ensureProject();
     say(msg, `업로드 중 (${(file.size/1048576).toFixed(0)}MB)…`);
-    const cap = await upload(p, role, file, isA ? 'p-a' : 'p-b');
-    store.set(isA ? 'capA' : 'capB', cap.capture_id);
+    const cap = await upload(p, role, file, flow.progress);
+    store.set(flow.capture, cap.capture_id);
     const ids = isA ? [cap.capture_id] : [store.get('capA'), cap.capture_id];
-    const run = await startRun(isA ? 'initial' : 'combined', ids);
-    store.set(isA ? 'runA' : 'runAB', run);
+    const run = await startRun(flow.mode, ids);
+    store.set(flow.run, run);
     if (isA) { store.set('capB', null); store.set('runAB', null); enable('c-b', false); enable('c-rb', false); }
     const s = await poll(run, msg);
-    if (s.state === 'completed') await afterRun(isA);
+    if (s.state === 'completed') await afterRun(role);
   } catch (e) { say(msg, errText(e), 'bad'); }
 }
 
-async function afterRun(isA) {
-  if (isA) {
-    enable('c-ra', true); const r = await showReport(store.get('runA'), 'r-a');
+async function afterRun(role) {
+  const flow = FLOWS[role];
+  enable(flow.card, true);
+  const report = await showReport(store.get(flow.run), flow.result);
+  if (role === 'initial') {
     enable('c-b', true);
-    if (!r.regions.some(g => g.recommended)) say('m-b', '안내 근거가 부족합니다. 그래도 덜 찍힌 곳을 보완 촬영할 수 있습니다.');
-    $('c-ra').scrollIntoView({behavior:'smooth'});
-  } else {
-    enable('c-rb', true); await showReport(store.get('runAB'), 'r-b');
-    $('c-rb').scrollIntoView({behavior:'smooth'});
+    if (!report.regions.some(g => g.recommended)) say('m-b', '안내 근거가 부족합니다. 그래도 덜 찍힌 곳을 보완 촬영할 수 있습니다.');
   }
+  $(flow.card).scrollIntoView({behavior:'smooth'});
+}
+
+function clearProject() {
+  for (const key of PROJECT_KEYS) store.set(key, null);
 }
 
 for (const [id, role] of [['f-a-cam','initial'],['f-a-pick','initial'],['f-b-cam','supplement'],['f-b-pick','supplement']]) {
@@ -235,10 +249,11 @@ async function resume() {
   // Restore the last project's state after a reload.
   const p = store.get('project'); if (!p) return;
   $('info').textContent = '프로젝트 ' + p.slice(0, 8);
-  for (const [key, isA, msg] of [['runA', true, 'm-a'], ['runAB', false, 'm-b']]) {
-    const run = store.get(key); if (!run) continue;
-    try { const s = await poll(run, msg); if (s.state === 'completed') await afterRun(isA); }
-    catch (e) { if (e?.error?.code === 'NOT_FOUND') { store.set('project', null); store.set('runA', null); store.set('runAB', null); } else say(msg, errText(e), 'bad'); }
+  for (const [role, flow] of Object.entries(FLOWS)) {
+    const run = store.get(flow.run); if (!run) continue;
+    const msg = flow.message;
+    try { const s = await poll(run, msg); if (s.state === 'completed') await afterRun(role); }
+    catch (e) { if (e?.error?.code === 'NOT_FOUND') { clearProject(); } else say(msg, errText(e), 'bad'); }
   }
 }
 
@@ -252,7 +267,7 @@ $('b-connect').onclick = async () => {
     enable('c-a', true); resume();
   } catch (e) { say('m-connect', errText(e), 'bad'); }
 };
-$('b-reset').onclick = () => { for (const k of ['project','capA','capB','runA','runAB']) store.set(k, null); location.reload(); };
+$('b-reset').onclick = () => { clearProject(); location.reload(); };
 if (token) $('b-connect').click();
 </script>
 </body>

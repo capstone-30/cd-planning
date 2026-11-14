@@ -45,9 +45,9 @@ def read_images(folder):
     return cameras, images
 
 
-def read_model(folder):
-    cameras, _ = read_images(folder)
-    points = []
+def read_points(folder, cameras):
+    """Read tracks keyed by point ID using already loaded camera metadata."""
+    points = {}
     for line in (folder / 'points3D.txt').read_text(encoding='utf-8').splitlines():
         if not line.strip() or line.startswith('#'):
             continue
@@ -59,8 +59,27 @@ def read_model(folder):
         ids = sorted(set(map(int, v[8::2])))
         if any(i not in cameras for i in ids):
             raise ValueError('Track references an unregistered image')
-        points.append((xyz, error, ids))
-    return cameras, points
+        point_id = int(v[0])
+        if point_id in points:
+            raise ValueError('Duplicate point ID')
+        points[point_id] = (xyz, error, ids)
+    return points
+
+
+def read_model(folder):
+    cameras, _ = read_images(folder)
+    return cameras, list(read_points(folder, cameras).values())
+
+
+def region_bounds(points):
+    lo = [min(p[0][i] for p in points) for i in range(3)]
+    span = [max(p[0][i] for p in points)-lo[i] for i in range(3)]
+    return lo, span
+
+
+def region_index(xyz, lo, span, bins=3):
+    return tuple(min(bins-1, int((xyz[i]-lo[i])/span[i]*bins)) if span[i] else 0
+                 for i in range(3))
 
 
 def analyze(cameras, points, bins=3):
@@ -75,11 +94,10 @@ def analyze(cameras, points, bins=3):
             raise ValueError('Invalid point coordinates, error or track')
         if any(i not in cameras for i in ids):
             raise ValueError('Unknown camera')
-    lo = [min(p[0][i] for p in points) for i in range(3)]
-    span = [max(p[0][i] for p in points)-lo[i] for i in range(3)]
+    lo, span = region_bounds(points)
     groups = defaultdict(list)
     for p in points:
-        key = tuple(min(bins-1, int((p[0][i]-lo[i])/span[i]*bins)) if span[i] else 0 for i in range(3))
+        key = region_index(p[0], lo, span, bins)
         groups[key].append(p)
     rows = []
     for key, group in sorted(groups.items()):
@@ -153,7 +171,7 @@ if __name__ == '__main__':
     source = parser.add_mutually_exclusive_group(required=True)
     source.add_argument('--demo', action='store_true')
     source.add_argument('--colmap', type=Path, help='COLMAP TXT model directory')
-    parser.add_argument('--output', type=Path, default=Path('poc/output'))
+    parser.add_argument('--output', type=Path, default=Path('output'))
     parser.add_argument('--bins', type=int, default=3)
     args = parser.parse_args()
     try:

@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Literal
 from uuid import uuid4
 
-from fastapi import FastAPI, File, Form, Request, UploadFile
+from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, ConfigDict
 from starlette.formparsers import MultiPartException
@@ -19,6 +19,22 @@ from .runner import Runner
 from .store import Failure, Store, free_space, ident, load, lock_file, release, save
 
 MAX_VIDEO_BYTES = 250 * 1024**2
+VIDEO_SIZE_MESSAGE = '영상은 250MB 이하여야 합니다.'
+
+
+def error_response(code, message, status, **details):
+    return JSONResponse({'error': dict(code=code, message=message, **details)}, status)
+
+
+def select_captures(captures, requested, mode):
+    lookup = {capture['capture_id']: capture for capture in captures}
+    if len(set(requested)) != len(requested) or any(cid not in lookup for cid in requested):
+        raise Failure('INVALID_INPUT', '중복되거나 다른 프로젝트의 촬영 ID입니다.')
+    selected = sorted((lookup[cid] for cid in requested), key=lambda capture: capture['role'])
+    expected = ['initial'] if mode == 'initial' else ['initial', 'supplement']
+    if [capture['role'] for capture in selected] != expected:
+        raise Failure('INVALID_INPUT', '최초 A 또는 같은 프로젝트의 A+B를 선택하세요.')
+    return selected
 
 
 class RunInput(BaseModel):
@@ -45,7 +61,7 @@ class Guard:
         headers = dict(scope['headers'])
         authorization = headers.get(b'authorization', b'')
         if not hmac.compare_digest(authorization, ('Bearer '+self.token).encode()):
-            return await JSONResponse({'error': {'code': 'UNAUTHORIZED', 'message': '개발 토큰을 확인하세요.'}}, 401)(scope, receive, send)
+            return await error_response('UNAUTHORIZED', '개발 토큰을 확인하세요.', 401)(scope, receive, send)
         total = 0
         exceeded = False
         replaced = False
@@ -62,13 +78,13 @@ class Guard:
             if exceeded:
                 if not replaced:
                     replaced = True
-                    await JSONResponse({'error': {'code': 'FILE_TOO_LARGE', 'message': '영상은 250MB 이하여야 합니다.'}}, 413)(scope, receive, send)
+                    await error_response('FILE_TOO_LARGE', VIDEO_SIZE_MESSAGE, 413)(scope, receive, send)
                 return
             await send(message)
         try:
             await self.app(scope, bounded, bounded_send)
         except BodyTooLarge:
-            await JSONResponse({'error': {'code': 'FILE_TOO_LARGE', 'message': '영상은 250MB 이하여야 합니다.'}}, 413)(scope, receive, send)
+            await error_response('FILE_TOO_LARGE', VIDEO_SIZE_MESSAGE, 413)(scope, receive, send)
 
 
 def create_app(root=None, token=None, config=None, processor=execute, web_page=None):
@@ -111,11 +127,11 @@ def create_app(root=None, token=None, config=None, processor=execute, web_page=N
     async def failure_handler(request, error):
         status = {'NOT_FOUND': 404, 'BUSY': 409, 'NOT_READY': 409, 'INVALID_INPUT': 422,
                   'FILE_TOO_LARGE': 413, 'DISK_SPACE': 507, 'TOOL_UNAVAILABLE': 503}.get(error.code, 422)
-        return JSONResponse({'error': {'code': error.code, 'message': error.message, 'log': error.log}}, status)
+        return error_response(error.code, error.message, status, log=error.log)
 
     @app.exception_handler(BodyTooLarge)
     async def body_handler(request, error):
-        return JSONResponse({'error': {'code': 'FILE_TOO_LARGE', 'message': '영상은 250MB 이하여야 합니다.'}}, 413)
+        return error_response('FILE_TOO_LARGE', VIDEO_SIZE_MESSAGE, 413)
 
     if web_page is not None:
         @app.get('/', include_in_schema=False)
@@ -155,7 +171,7 @@ def create_app(root=None, token=None, config=None, processor=execute, web_page=N
                 while chunk := file.file.read(1024**2):
                     total += len(chunk)
                     if total > MAX_VIDEO_BYTES:
-                        raise Failure('FILE_TOO_LARGE', '영상은 250MB 이하여야 합니다.')
+                        raise Failure('FILE_TOO_LARGE', VIDEO_SIZE_MESSAGE)
                     output.write(chunk)
                 output.flush()
                 os.fsync(output.fileno())
@@ -179,13 +195,7 @@ def create_app(root=None, token=None, config=None, processor=execute, web_page=N
         with store.metadata():
             value = load(project/'project.json')
             requested = payload.capture_ids
-            lookup = {c['capture_id']: c for c in value['captures']}
-            if len(set(requested)) != len(requested) or any(cid not in lookup for cid in requested):
-                raise Failure('INVALID_INPUT', '중복되거나 다른 프로젝트의 촬영 ID입니다.')
-            captures = sorted((lookup[cid] for cid in requested), key=lambda c: c['role'])
-            expected = ['initial'] if payload.mode == 'initial' else ['initial', 'supplement']
-            if [c['role'] for c in captures] != expected:
-                raise Failure('INVALID_INPUT', '최초 A 또는 같은 프로젝트의 A+B를 선택하세요.')
+            captures = select_captures(value['captures'], requested, payload.mode)
             lock = store.acquire()
             try:
                 run_id = str(uuid4())
@@ -218,18 +228,20 @@ def create_app(root=None, token=None, config=None, processor=execute, web_page=N
         result['comparison'] = load(store.project(project_id)/'project.json').get('comparison')
         return result
 
-    @app.get('/projects/{project_id}/runs/{run_id}/report')
-    def report(project_id: str, run_id: str):
+    def completed_run(project_id, run_id):
         run = store.run(project_id, run_id)
         if load(run/'status.json')['state'] != 'completed':
             raise Failure('NOT_READY', '분석이 아직 완료되지 않았습니다.')
+        return run
+
+    @app.get('/projects/{project_id}/runs/{run_id}/report')
+    def report(project_id: str, run_id: str):
+        run = completed_run(project_id, run_id)
         return load(run/'analysis/report.json')
 
     @app.get('/projects/{project_id}/runs/{run_id}/media/{asset_id}')
     def media(project_id: str, run_id: str, asset_id: str):
-        run = store.run(project_id, run_id)
-        if load(run/'status.json')['state'] != 'completed':
-            raise Failure('NOT_READY', '분석이 아직 완료되지 않았습니다.')
+        run = completed_run(project_id, run_id)
         assets = load(run/'analysis/assets.json')
         filename = assets.get(ident(asset_id))
         if not filename or Path(filename).name != filename or not filename.endswith('.png'):

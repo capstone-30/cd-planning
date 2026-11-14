@@ -1,12 +1,12 @@
 # 경량 PoC 기술 명세
 
-> **기존 PoC 기술 명세:** Mac·Brush와 iOS 기반 PoC의 구현·재현 기준으로 유지한다. 본 프로젝트는 별도의 [Ubuntu·Nerfstudio 스택](../../../../docs/03-tech/3dgs-stack.md)을 따른다.
+> **기존 PoC 기술 명세:** Mac·Brush와 iOS 기반 PoC의 구현·재현 기준으로 유지한다. 프로젝트·PoC의 공통 목표는 [Ubuntu·Nerfstudio·Splatfacto](../../../../docs/03-tech/3dgs-stack.md)이며, 아래 Brush 실행 경로의 이관은 아직 완료하지 않았다.
 
 작성일: 2026-11-10 · 기능 기준: [func-specs.md](../../../ios/docs/01-func/func-specs.md) · UX/UI 기준: [uxui-specs.md](../../../ios/docs/02-uxui/uxui-specs.md)
 
-초기 명세를 구현 현황에 맞춰 갱신한 문서다. 현재 실행·실측 범위와 미완료 항목은 [검증 기록](../../../shared-poc/docs/04-test/validation.md)을 따른다. 공개 실내 데이터의 Mac 처리 경로와 iOS 빌드는 검증했지만 실기기 전체 흐름은 미검증이다. 시점 선택 실험은 [중단 기록](../../../shared-poc/docs/04-test/reports/closed-experiments.md)으로 남겼다.
+초기 명세를 구현 현황에 맞춰 갱신한 문서다. 현재 실행·실측 범위와 미완료 항목은 [검증 기록](../../../common/docs/validation.md)을 따른다. 공개 실내 데이터의 Mac 처리 경로와 iOS 빌드는 검증했지만 실기기 전체 흐름은 미검증이다. 시점 선택 실험은 [중단 기록](../../../common/docs/reports/closed-experiments.md)으로 남겼다.
 
-2026-11-13 갱신: [플랫폼 간 실측과 종료 실험](../../../shared-poc/docs/04-test/reports/closed-experiments.md)은 공용 기록에서 관리한다. v2 화질 비교에서는 균등 선택 대비 개선을 확인하지 못했다. 제품 목표를 복원 상태 표시·보완 촬영 지원으로 조정했다. 저장 자료의 상태 일치 점검은 [후속 결과](../../../shared-poc/docs/04-test/reports/capture-support-result.md), 실기기 지원 효과 검증은 [촬영 절차](../../../shared-poc/docs/04-test/capture-support-validation.md)를 따른다.
+2026-11-13 갱신: [플랫폼 간 실측과 종료 실험](../../../common/docs/reports/closed-experiments.md)은 공용 기록에서 관리한다. v2 화질 비교에서는 균등 선택 대비 개선을 확인하지 못했다. 제품 목표를 복원 상태 표시·보완 촬영 지원으로 조정했다. 저장 자료의 상태 일치 점검은 [후속 결과](../../../common/docs/reports/capture-support-result.md), 실기기 지원 효과 검증은 [촬영 절차](../../../common/docs/capture-support-validation.md)를 따른다.
 
 ## 1. 구성과 선택
 
@@ -16,13 +16,13 @@ iPhone 앱 (SwiftUI + AVFoundation + URLSession)
        Mac: FastAPI + 단일 작업 실행 루프 + 로컬 파일
          ├─ FFmpeg: 프레임 추출·영상 방향 반영
          ├─ COLMAP: 특징·매칭·희소 복원·모델 변환·왜곡 보정
-         ├─ shared-poc/poc/poc.py: 영역 특징·규칙 점수 (후보 자세 없이 방향 생성 안 함)
+         ├─ common/poc.py: 영역 특징·규칙 점수 (후보 자세 없이 방향 생성 안 함)
          └─ Brush: 3DGS 학습·PLY 저장·Mac 뷰어 (P1, 초기 수동)
 ```
 
 - 서버는 macOS에서 네이티브 실행한다. Docker·CUDA·PyTorch는 첫 PoC에 도입하지 않는다.
 - COLMAP은 macOS 설치를 지원한다. 원본 Graphdeco 3DGS 학습기는 CUDA 의존성이 있어 사용하지 않는다. Brush는 macOS, COLMAP 입력, CLI 및 뷰어를 지원하므로 기본 후보로 선택한다. **M5 호환성과 자원 사용량은 첫 실측 게이트에서 확인한다.** [COLMAP](https://colmap.github.io/install.html), [원본 3DGS](https://github.com/graphdeco-inria/gaussian-splatting), [Brush](https://github.com/ArthurBrussee/brush)
-- 서버·분석기·테스트는 `poc/shared-poc/poc/`에 두며 [공용 운영 절차](../../../shared-poc/docs/05-ops/runbook.md)를 따른다. Android 웹 클라이언트와 Windows 실행 도구는 별도 프로젝트다.
+- 서버·분석기·테스트는 `poc/common/`에 두며 [공용 운영 절차](../../../common/docs/runbook.md)를 따른다. Android 웹 클라이언트와 Windows 실행 도구는 별도 프로젝트다.
 - Python API 의존성은 FastAPI·Uvicorn·python-multipart·NumPy·OpenCV로 제한한다. 기존 분석 모듈은 표준 라이브러리를 유지한다.
 - DB·Redis·Celery·WebSocket은 도입하지 않는다. 상태 JSON과 2초 간격 폴링으로 충분하다.
 - 작업 루프는 API와 같은 단일 서버 프로세스에서 외부 명령을 순차 실행한다. Uvicorn worker는 1개이며 처리 중 두 번째 실행 요청은 409로 거절한다.
@@ -130,7 +130,7 @@ report는 `schema_version=2`, `run_id`, `source=real`, `method=region_guidance_v
 
 | 검증 | 최소 범위 |
 | --- | --- |
-| 기존 분석 회귀 | `python3 -m unittest discover -s poc -v` |
+| 기존 분석 회귀 | `python3 -m unittest discover -s tests -v` |
 | 서버 경계 | 과대/잘못된 파일, 잘못된 ID·토큰, 작업 중복, 명령 실패·시간 초과, 원자적 상태 저장 |
 | 안내 정확성 | 실제 COLMAP POINTS2D와 대표 이미지 경계 상자 대응, 근거 점 부족 제외, 방향 벡터 부호 |
 | 실기기 | 카메라·네트워크 권한 거부, 업로드 중 단절·재시도, 앱 재실행 후 상태 복구 |

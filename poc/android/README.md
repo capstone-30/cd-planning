@@ -12,11 +12,11 @@
 .\start-phone-server.ps1 -WebPage ..\android\web\index.html
 ```
 
-[macOS 서버](../macos/README.md)에서도 공용 `poc/` 폴더에서 아래처럼 페이지를 지정할 수 있다. 토큰 설정·도구 설치는 macOS 안내를 먼저 따른다. Mac 서버와 Android 실기기의 전체 흐름은 미검증이다.
+[macOS 서버](../macos/README.md)에서도 공용 `poc/common/` 폴더에서 아래처럼 페이지를 지정할 수 있다. 토큰 설정·도구 설치는 macOS 안내를 먼저 따른다. Mac 서버와 Android 실기기의 전체 흐름은 미검증이다.
 
 ```sh
 .venv/bin/python -m server --host 192.168.0.10 --port 8080 \
-  --web-page ../../android/web/index.html
+  --web-page ../android/web/index.html
 ```
 
 HTML은 서버의 `/`에서 제공하며 직접 파일을 열지 않는다. 빈 입력 화면은 토큰 없이 열리고 모든 API·이미지 요청에는 토큰이 필요하다.
@@ -43,4 +43,14 @@ HTML은 서버의 `/`에서 제공하며 직접 파일을 열지 않는다. 빈 
 | `REGISTRATION_INSUFFICIENT` / `FRAMES_INSUFFICIENT` | 가로로, 더 천천히, 앞 장면과 많이 겹치게 다시 촬영 |
 | `SUPPLEMENT_DISCONNECTED` | B를 A에서 찍었던 장면과 겹치게 찍기 |
 
-결과·로그는 서버의 `shared-poc/poc/data/`에 저장된다. [공용 API·Brush 운영](../shared-poc/docs/05-ops/runbook.md)을 참고한다.
+결과·로그는 서버의 `common/data/`에 저장된다. [공용 API·Brush 운영](../common/docs/runbook.md)을 참고한다.
+
+## 자동 검증
+
+저장소 루트에서 Node.js 기본 테스트 러너로 실행한다. 추가 패키지는 필요 없다.
+
+```sh
+node --test poc/android/web/tests/client.test.cjs
+```
+
+최초·보완 촬영의 작업 요청과 결과 선택, 잘못된 영상 길이, Blob URL 정리, 만료된 프로젝트 복구를 검증한다. 실제 Android 카메라·브라우저·서버 연동 검증은 별도로 필요하다.

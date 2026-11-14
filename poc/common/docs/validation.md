@@ -1,6 +1,6 @@
 # 검증 기록 — 2026-11-10
 
-2026-11-14 문서 분리: 아래 Mac·Windows·Brush 결과는 플랫폼별 기존 PoC의 공용 검증 기록이다. 본 프로젝트의 Ubuntu·Nerfstudio 실행 결과와 구분한다. [공용 PoC 안내](../../README.md)를 따른다.
+2026-11-14 문서 분리: 아래 Mac·Windows·Brush 결과는 플랫폼별 기존 PoC의 공용 검증 기록이다. 본 프로젝트의 Ubuntu·Nerfstudio 실행 결과와 구분한다. [공용 PoC 안내](../README.md)를 따른다.
 
 2026-11-13 보완 이미지 추가 시험: [동일 시점 A/A+10 비교](reports/supplement-effect-result.md)에서 실제 Brush 4회·평가 렌더 40장을 새로 생성했다. 두 시드 평균 PSNR은 19.664→24.146dB였다. 저장된 전체 SfM 자세를 공유한 단일 장면의 오프라인 결과이며, 실제 재촬영 안내 효과나 P0/P1 완료를 뜻하지 않는다.
 

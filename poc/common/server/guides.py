@@ -5,7 +5,7 @@ from uuid import uuid4
 import cv2
 import numpy as np
 
-from poc import analyze, read_images, read_model
+from poc import analyze, read_images, read_points, region_bounds, region_index
 from .store import Failure, save
 
 
@@ -19,21 +19,19 @@ LIMITATIONS = [
 
 
 def region_key(xyz, lo, span):
-    return ':'.join(str(min(2, int((xyz[i]-lo[i])/span[i]*3))) if span[i] else '0' for i in range(3))
+    return ':'.join(map(str, region_index(xyz, lo, span)))
 
 
 def make_report(run, input_frames, run_id):
     run = Path(run)
     model = run / 'colmap/text'
-    cameras, points = read_model(model)
-    _, images = read_images(model)
+    cameras, images = read_images(model)
+    points_by_id = read_points(model, cameras)
+    points = list(points_by_id.values())
     rows = analyze(cameras, points, bins=3)
-    point_ids = [int(line.split()[0]) for line in (model/'points3D.txt').read_text(encoding='utf-8').splitlines()
-                 if line.strip() and not line.startswith('#')]
-    lo = [min(p[0][i] for p in points) for i in range(3)]
-    span = [max(p[0][i] for p in points)-lo[i] for i in range(3)]
+    lo, span = region_bounds(points)
     groups = {}
-    for pid, (xyz, _, _) in zip(point_ids, points):
+    for pid, (xyz, _, _) in points_by_id.items():
         groups.setdefault(region_key(xyz, lo, span), set()).add(pid)
     output = run/'analysis'
     output.mkdir(parents=True, exist_ok=True)

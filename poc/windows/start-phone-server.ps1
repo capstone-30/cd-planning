@@ -4,7 +4,7 @@
 param([int]$Port = 8080, [switch]$Wifi, [string]$WebPage)
 $ErrorActionPreference = 'Stop'
 if ($WebPage) { $WebPage = (Resolve-Path -LiteralPath $WebPage).Path }
-$poc = Join-Path $PSScriptRoot '..\shared-poc\poc'
+$poc = Join-Path $PSScriptRoot '..\common'
 Set-Location $poc
 
 # COLMAP/Brush installed under %USERPROFILE%\Tools; add them in case this shell predates the PATH change.

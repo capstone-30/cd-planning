@@ -45,14 +45,14 @@ PSNR은 시점별 RGB PSNR의 산술평균이며 SSIM은 RGB 채널 평균, Gaus
 ## 증거·재현
 
 - [수치·프로토콜·실행 명령·해시·PLY 검사](supplement-effect-check.json)
-- [실행 코드](../../../poc/check_supplement_effect.py), [분할·평가 계산 테스트](../../../poc/tests/test_supplement_effect.py)
-- 로컬 원본: `poc/data/supplement-effect-gpu/`의 `manifest.json`, `protocol.json`, `comparison.json`, `datasets/`, `runs/`, 두 시드의 비교 JPG. 무거운 입력·PLY·원본 렌더는 Git 제외다.
-- 최초 샌드박스 실행은 Metal adapter를 찾지 못해 실패했다. `poc/data/supplement-effect/`에 실패 로그를 보존했고, GPU 접근 권한으로 새 출력 경로에서 4회를 성공했다.
+- [실행 코드](../../check_supplement_effect.py), [분할·평가 계산 테스트](../../tests/test_supplement_effect.py)
+- 로컬 원본: `data/supplement-effect-gpu/`의 `manifest.json`, `protocol.json`, `comparison.json`, `datasets/`, `runs/`, 두 시드의 비교 JPG. 무거운 입력·PLY·원본 렌더는 Git 제외다.
+- 최초 샌드박스 실행은 Metal adapter를 찾지 못해 실패했다. `data/supplement-effect/`에 실패 로그를 보존했고, GPU 접근 권한으로 새 출력 경로에서 4회를 성공했다.
 - 자동 테스트 23개 통과. 평가 분할의 중복·누수 거부와 알려진 오차의 PSNR/SSIM 계산을 포함한다. `git diff --check` 통과.
 
-저장 입력과 Brush가 있는 환경에서, 공용 PoC 루트(`poc/shared-poc/`)에서 실행한다. 기존 결과는 덮어쓰지 않는다.
+저장 입력과 Brush가 있는 환경에서, 공용 PoC 루트(`poc/common/`)에서 실행한다. 기존 결과는 덮어쓰지 않는다.
 
 ```sh
-poc/.venv/bin/python poc/check_supplement_effect.py --output poc/data/supplement-effect-new
-poc/.venv/bin/python -m unittest discover -s poc -p 'test_*.py'
+.venv/bin/python check_supplement_effect.py --output data/supplement-effect-new
+.venv/bin/python -m unittest discover -s tests -p 'test_*.py'
 ```

@@ -8,7 +8,7 @@
 
 ## 실행한 검증
 
-`poc/check_capture_support.py`가 `poc/data/core-check/summary.json`의 project/run ID를 따라 Windows 최초·보완 모델을 읽었다. 로컬에 함께 남아 있는 과거 Mac run을 섞지 않았다. 원본 실측 파일을 수정하지 않고 [검사 결과와 입력 SHA256](capture-support-check.json)을 별도 저장했다.
+`check_capture_support.py`가 `data/core-check/summary.json`의 project/run ID를 따라 Windows 최초·보완 모델을 읽었다. 로컬에 함께 남아 있는 과거 Mac run을 섞지 않았다. 원본 실측 파일을 수정하지 않고 [검사 결과와 입력 SHA256](capture-support-check.json)을 별도 저장했다.
 
 | 항목 | 최초 A | A+B |
 | --- | ---: | ---: |
@@ -33,9 +33,9 @@
 
 ## 재현
 
-공용 PoC 루트(`poc/shared-poc/`)에서 실행한다. 출력은 새 파일이어야 하며 기존 증거를 덮어쓰지 않는다. Python의 assert 검사를 사용하므로 `-O` 옵션 없이 실행한다.
+공용 PoC 루트(`poc/common/`)에서 실행한다. 출력은 새 파일이어야 하며 기존 증거를 덮어쓰지 않는다. Python의 assert 검사를 사용하므로 `-O` 옵션 없이 실행한다.
 
 ```sh
-python3 poc/check_capture_support.py --output /tmp/capture-support-check-new.json
-poc/.venv/bin/python -m unittest discover -s poc -p 'test_*.py'
+python3 check_capture_support.py --output /tmp/capture-support-check-new.json
+.venv/bin/python -m unittest discover -s tests -p 'test_*.py'
 ```

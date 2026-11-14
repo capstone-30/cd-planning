@@ -2,7 +2,7 @@
 
 준비일: 2026-11-13 (한국 시간). 상태: **촬영 전 / 실제 사용자 효과 미측정**.
 
-사용자가 촬영 전임을 확인했다. 현재 `poc/data/core-check/A.mov`, `B.mov`는 공개 Mip-NeRF 360 사진을 이어 붙인 영상이다(`poc/run_core_check.py`). 사용자 촬영 대조군으로 사용하지 않는다.
+사용자가 촬영 전임을 확인했다. 현재 `data/core-check/A.mov`, `B.mov`는 공개 Mip-NeRF 360 사진을 이어 붙인 영상이다(`run_core_check.py`). 사용자 촬영 대조군으로 사용하지 않는다.
 
 ## 이번 실행의 고정 조건
 
@@ -45,10 +45,10 @@
 
 ## 실행 설정
 
-[기존 실행 안내](../../../macos/docs/05-ops/runbook.md)의 서버 실행에 아래 인수를 사용한다. 토큰은 기존 절차대로 환경 변수에만 설정한다. 기존 데이터와 분리된 새 경로를 사용한다.
+[기존 실행 안내](../../macos/docs/05-ops/runbook.md)의 서버 실행에 아래 인수를 사용한다. 토큰은 기존 절차대로 환경 변수에만 설정한다. 기존 데이터와 분리된 새 경로를 사용한다.
 
 ```sh
-cd poc/shared-poc/poc
+cd poc/common
 .venv/bin/python -m server --host 127.0.0.1 --port 8080 \
   --data data/user-study-60plus10 \
   --initial-frames 60 --supplement-frames 10 --long-edge 960 --blur-threshold 0
@@ -60,7 +60,7 @@ cd poc/shared-poc/poc
 
 ## 장면별 작성표
 
-아래 표를 scene-01, scene-02, scene-03에 각각 복사해 사용한다. 원본 영상은 `poc/data/user-study-60plus10-inputs/scene-01/`처럼 별도 보관한다. A·B-guide·B-free·평가 영상의 역할을 파일명에 표시한다. 미측정은 빈칸으로 둔다.
+아래 표를 scene-01, scene-02, scene-03에 각각 복사해 사용한다. 원본 영상은 `data/user-study-60plus10-inputs/scene-01/`처럼 별도 보관한다. A·B-guide·B-free·평가 영상의 역할을 파일명에 표시한다. 미측정은 빈칸으로 둔다.
 
 | 촬영 전에 기록 | 값 |
 | --- | --- |

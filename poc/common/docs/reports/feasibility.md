@@ -4,14 +4,14 @@
 
 **판정: 조건부 진행 권장. 소프트웨어 연결 기반은 확인했으나 실제 장면 PoC와 연구 가설은 미검증이다.**
 
-검토 대상은 [당시 프로젝트 계획서](../../01-func/project-plan-history.md), 기능·기술 명세, Python 분석기·서버·테스트, iOS 촬영·API 코드다. 이번 검토는 프로젝트 전체의 보안 감사나 실제 실내 복원 실험을 대체하지 않는다. 기존 구현 파일은 수정하지 않았다.
+검토 대상은 [당시 프로젝트 계획서](../project-plan-history.md), 기능·기술 명세, Python 분석기·서버·테스트, iOS 촬영·API 코드다. 이번 검토는 프로젝트 전체의 보안 감사나 실제 실내 복원 실험을 대체하지 않는다. 기존 구현 파일은 수정하지 않았다.
 
 ## 이번에 직접 확인한 결과
 
 | 확인 | 결과 | 의미 |
 | --- | --- | --- |
-| `poc/.venv/bin/python -m unittest discover -s poc -v` | 17개 통과 | 분석 회귀, API 경계, 실패·잠금·재시작, 안내 상자, 정렬, fixture 명령 연결 확인 |
-| `poc/.venv/bin/python poc/poc.py --demo --output /tmp/capstone-poc-check-demo` | 27개 영역 산출 | 합성 입력의 규칙 계산·파일 출력 성공 |
+| `.venv/bin/python -m unittest discover -s tests -v` | 17개 통과 | 분석 회귀, API 경계, 실패·잠금·재시작, 안내 상자, 정렬, fixture 명령 연결 확인 |
+| `.venv/bin/python poc.py --demo --output /tmp/capstone-poc-check-demo` | 27개 영역 산출 | 합성 입력의 규칙 계산·파일 출력 성공 |
 | Xcode 기기용 Debug 빌드 | 종료 코드 0, 서명 비활성화 | 컴파일 성공. 기기 설치·촬영·LAN 업로드 성공은 아님 |
 | `command -v ffmpeg ffprobe colmap brush` | 네 도구 모두 현재 PATH에서 발견되지 않음 | 실제 처리 파이프라인을 이 환경에서 바로 실행할 수 없음 |
 | `server.experiment doctor` | `ffmpeg 설치와 PATH를 확인하세요`로 실패 | G0 도구 게이트 미통과 |
@@ -73,6 +73,6 @@ xcodebuild -quiet -project ios/CaptureGuide.xcodeproj -scheme CaptureGuide \
 | 연구 착수 | 독립 평가 오차와 특징 데이터의 대응이 재현됨 | 예측 단위 축소 또는 연구 목표 변경 |
 | 연구 주장 | 공간 분리 평가와 동일 촬영량 기준선 비교 결과 확보 | 개선·일반화 주장 축소, 부정 결과도 보고 |
 
-G0~G3의 수치 기준은 [기능 명세](../../../../ios/docs/01-func/func-specs.md), [기술 명세](../../../../macos/docs/03-tech/tech-specs.md), [실행 안내](../../../../macos/docs/05-ops/runbook.md)를 따른다. 예: 단일 모델 등록 60% 이상·30장 이상·100점 이상, A+B에서 A 60% 이상·B 10장 이상. 이 기준들은 운영 게이트이며 충분한 최종 시각 품질을 보장하지 않는다.
+G0~G3의 수치 기준은 [기능 명세](../../../ios/docs/01-func/func-specs.md), [기술 명세](../../../macos/docs/03-tech/tech-specs.md), [실행 안내](../../../macos/docs/05-ops/runbook.md)를 따른다. 예: 단일 모델 등록 60% 이상·30장 이상·100점 이상, A+B에서 A 60% 이상·B 10장 이상. 이 기준들은 운영 게이트이며 충분한 최종 시각 품질을 보장하지 않는다.
 
 **권장 범위:** “실내 촬영 보완과 3DGS 전후 비교”를 먼저 입증하고, “학습 기반 품질 예측”은 데이터 생성과 기준선 검증 후 확정한다. 현재 결과만으로 계획서 전체의 구현·성능·연구 타당성이 검증됐다고 발표하지 않는다.

@@ -1,13 +1,15 @@
 import json
 import math
 import shutil
+import sys
 import time
+import traceback
 from pathlib import Path
 
 import cv2
 import numpy as np
 
-from poc import read_images, read_model
+from poc import read_images, read_model, read_points
 from .runner import Runner
 from .store import Failure, load, save
 
@@ -61,8 +63,8 @@ def tools_config(runner):
 
 
 def check_model(model, frame_records, mode):
-    cameras, points = read_model(model)
-    _, images = read_images(model)
+    cameras, images = read_images(model)
+    points = list(read_points(model, cameras).values())
     if len(cameras) < 30 or len(cameras)/len(frame_records) < .6 or len(points) < 100:
         raise Failure('REGISTRATION_INSUFFICIENT', '단일 모델의 정합이 부족합니다. 천천히 겹치는 시점으로 다시 촬영하세요.')
     if mode == 'combined':
@@ -72,6 +74,84 @@ def check_model(model, frame_records, mode):
         if sum(n in registered for n in initial) < .6*len(initial) or sum(n in registered for n in supplement) < 10:
             raise Failure('SUPPLEMENT_DISCONNECTED', '보완 영상이 최초 영상과 같은 모델에 충분히 연결되지 않았습니다.')
     return len(cameras)
+
+
+def preprocess(run, project, captures, config, runner, deadline):
+    frames = []
+    for capture in captures:
+        cid, role = capture['capture_id'], capture['role']
+        path = Path(project)/'captures'/f'{cid}.mov'
+        probe(path, runner, role, deadline)
+        candidates = run/'candidates'/cid
+        candidates.mkdir(parents=True)
+        edge = config['long_edge']
+        filters = f"fps={config['fps']},scale=w='if(gte(iw,ih),min(iw,{edge}),-2)':h='if(gte(iw,ih),-2,min(ih,{edge}))'"
+        runner.run(['ffmpeg', '-nostdin', '-v', 'error', '-i', str(path), '-an', '-vf', filters,
+                    '-frames:v', str(math.ceil(capture['duration']*config['fps'])+1),
+                    '-q:v', '2', str(candidates/'%06d.jpg')], config['preprocess_seconds'], deadline)
+        measured = []
+        for index, filename in enumerate(sorted(candidates.glob('*.jpg'))):
+            if time.monotonic() >= deadline:
+                raise Failure('TIMEOUT', '프레임 전처리 시간 제한을 초과했습니다.')
+            image = cv2.imread(str(filename), cv2.IMREAD_GRAYSCALE)
+            if image is None:
+                raise Failure('DECODE_FAILED', '프레임 디코딩에 실패했습니다.')
+            sharpness = float(cv2.Laplacian(image, cv2.CV_64F).var())
+            measured.append(dict(name=f'{cid}/{filename.name}', capture_id=cid, role=role,
+                time_seconds=(index+.5)/config['fps'], sharpness=sharpness,
+                width=image.shape[1], height=image.shape[0], selected=False))
+        eligible = [f for f in measured if f['sharpness'] >= config['blur_threshold']]
+        if len(eligible) < 30:
+            raise Failure('FRAMES_INSUFFICIENT', '유효 프레임이 30장 미만입니다. 천천히 겹치는 시점으로 다시 촬영하세요.')
+        maximum = config['initial_frames'] if role == 'initial' else config['supplement_frames']
+        chosen = {int(i) for i in np.linspace(0, len(eligible)-1, min(len(eligible), maximum))}
+        for index in chosen:
+            frame = eligible[index]
+            frame['selected'] = True
+            target = run/'frames'/frame['name']
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(candidates/Path(frame['name']).name, target)
+            frames.append(frame)
+        save(run/f'capture-{cid}-frames.json', measured)
+    save(run/'frames.json', frames)
+    return frames
+
+
+def reconstruct(run, frames, config, runner, deadline, mode):
+    colmap = run/'colmap'
+    sparse = colmap/'sparse'
+    sparse.mkdir(parents=True)
+    database = str(colmap/'database.db')
+    runner.run(['colmap', 'feature_extractor', '--database_path', database, '--image_path', str(run/'frames'),
+        '--ImageReader.single_camera_per_folder', '1', '--ImageReader.camera_model', 'SIMPLE_RADIAL',
+        config['cpu_extraction'], '0'], config['sfm_seconds'], deadline)
+    matcher = 'exhaustive_matcher' if config['matcher'] == 'exhaustive' else 'sequential_matcher'
+    runner.run(['colmap', matcher, '--database_path', database, config['cpu_matching'][matcher], '0'],
+               config['sfm_seconds'], deadline)
+    if mode == 'combined' and matcher != 'exhaustive_matcher':
+        # At most 120 frames: exhaustive cross-capture matching also closes A/B loop links.
+        runner.run(['colmap', 'exhaustive_matcher', '--database_path', database,
+            config['cpu_matching']['exhaustive_matcher'], '0'], config['sfm_seconds'], deadline)
+    runner.run(['colmap', 'mapper', '--database_path', database, '--image_path', str(run/'frames'),
+                '--output_path', str(sparse)], config['sfm_seconds'], deadline)
+    models = []
+    for model in sorted(sparse.iterdir()):
+        if not model.is_dir():
+            continue
+        text = colmap/f'text-{model.name}'
+        text.mkdir()
+        runner.run(['colmap', 'model_converter', '--input_path', str(model), '--output_path', str(text),
+                    '--output_type', 'TXT'], config['sfm_seconds'], deadline)
+        cameras, _ = read_model(text)
+        models.append((len(cameras), model, text))
+    if not models:
+        raise Failure('REGISTRATION_INSUFFICIENT', '복원된 단일 SfM 모델이 없습니다.')
+    _, model, text = max(models, key=lambda item: item[0])
+    check_model(text, frames, mode)
+    shutil.copytree(text, colmap/'text')
+    config['selected_model'] = str(model.relative_to(run))
+    config['input_frames'] = len(frames)
+    save(run/'run-config.json', config)
 
 
 def execute(run, project, captures, config):
@@ -90,89 +170,19 @@ def execute(run, project, captures, config):
         config.update(tools_config(runner))
         save(run/'run-config.json', config)
         deadline = tick + config['preprocess_seconds']
-        frames = []
-        for capture in captures:
-            cid, role = capture['capture_id'], capture['role']
-            path = Path(project)/'captures'/f'{cid}.mov'
-            probe(path, runner, role, deadline)
-            candidates = run/'candidates'/cid
-            candidates.mkdir(parents=True)
-            edge = config['long_edge']
-            filters = f"fps={config['fps']},scale=w='if(gte(iw,ih),min(iw,{edge}),-2)':h='if(gte(iw,ih),-2,min(ih,{edge}))'"
-            runner.run(['ffmpeg', '-nostdin', '-v', 'error', '-i', str(path), '-an', '-vf', filters,
-                        '-frames:v', str(math.ceil(capture['duration']*config['fps'])+1),
-                        '-q:v', '2', str(candidates/'%06d.jpg')], config['preprocess_seconds'], deadline)
-            measured = []
-            for index, filename in enumerate(sorted(candidates.glob('*.jpg'))):
-                if time.monotonic() >= deadline:
-                    raise Failure('TIMEOUT', '프레임 전처리 시간 제한을 초과했습니다.')
-                image = cv2.imread(str(filename), cv2.IMREAD_GRAYSCALE)
-                if image is None:
-                    raise Failure('DECODE_FAILED', '프레임 디코딩에 실패했습니다.')
-                sharpness = float(cv2.Laplacian(image, cv2.CV_64F).var())
-                measured.append(dict(name=f'{cid}/{filename.name}', capture_id=cid, role=role,
-                    time_seconds=(index+.5)/config['fps'], sharpness=sharpness,
-                    width=image.shape[1], height=image.shape[0], selected=False))
-            eligible = [f for f in measured if f['sharpness'] >= config['blur_threshold']]
-            if len(eligible) < 30:
-                raise Failure('FRAMES_INSUFFICIENT', '유효 프레임이 30장 미만입니다. 천천히 겹치는 시점으로 다시 촬영하세요.')
-            maximum = config['initial_frames'] if role == 'initial' else config['supplement_frames']
-            chosen = {int(i) for i in np.linspace(0, len(eligible)-1, min(len(eligible), maximum))}
-            for index in chosen:
-                frame = eligible[index]
-                frame['selected'] = True
-                target = run/'frames'/frame['name']
-                target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(candidates/Path(frame['name']).name, target)
-                frames.append(frame)
-            save(run/f'capture-{cid}-frames.json', measured)
-        save(run/'frames.json', frames)
+        frames = preprocess(run, project, captures, config, runner, deadline)
         timings['preprocess'] = time.monotonic()-tick
         tick = stage('sfm')
         deadline = tick + config['sfm_seconds']
-        colmap = run/'colmap'
-        sparse = colmap/'sparse'
-        sparse.mkdir(parents=True)
-        database = str(colmap/'database.db')
-        runner.run(['colmap', 'feature_extractor', '--database_path', database, '--image_path', str(run/'frames'),
-            '--ImageReader.single_camera_per_folder', '1', '--ImageReader.camera_model', 'SIMPLE_RADIAL',
-            config['cpu_extraction'], '0'], config['sfm_seconds'], deadline)
-        matcher = 'exhaustive_matcher' if config['matcher'] == 'exhaustive' else 'sequential_matcher'
-        runner.run(['colmap', matcher, '--database_path', database, config['cpu_matching'][matcher], '0'],
-                   config['sfm_seconds'], deadline)
-        if status['mode'] == 'combined' and matcher != 'exhaustive_matcher':
-            # At most 120 frames: exhaustive cross-capture matching also closes A/B loop links.
-            runner.run(['colmap', 'exhaustive_matcher', '--database_path', database,
-                config['cpu_matching']['exhaustive_matcher'], '0'], config['sfm_seconds'], deadline)
-        runner.run(['colmap', 'mapper', '--database_path', database, '--image_path', str(run/'frames'),
-                    '--output_path', str(sparse)], config['sfm_seconds'], deadline)
-        models = []
-        for model in sorted(sparse.iterdir()):
-            if not model.is_dir():
-                continue
-            text = colmap/f'text-{model.name}'
-            text.mkdir()
-            runner.run(['colmap', 'model_converter', '--input_path', str(model), '--output_path', str(text),
-                        '--output_type', 'TXT'], config['sfm_seconds'], deadline)
-            cameras, _ = read_model(text)
-            models.append((len(cameras), model, text))
-        if not models:
-            raise Failure('REGISTRATION_INSUFFICIENT', '복원된 단일 SfM 모델이 없습니다.')
-        _, model, text = max(models, key=lambda item: item[0])
-        check_model(text, frames, status['mode'])
-        shutil.copytree(text, colmap/'text')
-        config['selected_model'] = str(model.relative_to(run))
-        config['input_frames'] = len(frames)
-        save(run/'run-config.json', config)
+        reconstruct(run, frames, config, runner, deadline, status['mode'])
         timings['sfm'] = time.monotonic()-tick
         tick = stage('analyze')
-        runner.run([__import__('sys').executable, '-m', 'server.analyze', str(run), str(len(frames)),
+        runner.run([sys.executable, '-m', 'server.analyze', str(run), str(len(frames)),
                     status['run_id']], config['analyze_seconds'], cwd=Path(__file__).resolve().parents[1])
         timings['analyze'] = time.monotonic()-tick
         status.update(state='completed', finished_at=time.time())
     except Exception as error:
         if not isinstance(error, Failure):
-            import traceback
             (run/'logs/error.txt').write_text(traceback.format_exc(), encoding='utf-8')
             error = Failure('PROCESSING_FAILED', '처리에 실패했습니다. Mac의 error.txt를 확인하세요.', 'error.txt')
         status.update(state='failed', finished_at=time.time(), error=dict(code=error.code,

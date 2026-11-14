@@ -94,12 +94,16 @@ final class API: NSObject, URLSessionTaskDelegate, @unchecked Sendable {
 
     func fetch<T: Decodable>(_ path: String, method: String = "GET", object: [String: Any]? = nil) async throws -> T {
         let body = try object.map { try JSONSerialization.data(withJSONObject: $0) }
-        let (data, response) = try await session.data(for: request(path, method: method, body: body))
-        return try JSONDecoder().decode(T.self, from: checked(data, response))
+        let data = try await send(request(path, method: method, body: body))
+        return try JSONDecoder().decode(T.self, from: data)
     }
 
     func image(_ path: String) async throws -> Data {
-        let (data, response) = try await session.data(for: request(path))
+        try await send(request(path))
+    }
+
+    private func send(_ request: URLRequest) async throws -> Data {
+        let (data, response) = try await session.data(for: request)
         return try checked(data, response)
     }
 
@@ -108,6 +112,16 @@ final class API: NSObject, URLSessionTaskDelegate, @unchecked Sendable {
         let bodyURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         FileManager.default.createFile(atPath: bodyURL.path, contents: nil)
         defer { try? FileManager.default.removeItem(at: bodyURL) }
+        try writeUploadBody(to: bodyURL, file: file, role: role, boundary: boundary)
+        var request = request("projects/\(project)/captures", method: "POST")
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        setProgress(progress)
+        defer { setProgress(nil) }
+        let (data, response) = try await session.upload(for: request, fromFile: bodyURL)
+        return try JSONDecoder().decode(CaptureReply.self, from: checked(data, response))
+    }
+
+    private func writeUploadBody(to bodyURL: URL, file: URL, role: String, boundary: String) throws {
         let output = try FileHandle(forWritingTo: bodyURL)
         do {
             try output.write(contentsOf: Data("--\(boundary)\r\nContent-Disposition: form-data; name=\"role\"\r\n\r\n\(role)\r\n--\(boundary)\r\nContent-Disposition: form-data; name=\"file\"; filename=\"capture.mov\"\r\nContent-Type: video/quicktime\r\n\r\n".utf8))
@@ -117,12 +131,6 @@ final class API: NSObject, URLSessionTaskDelegate, @unchecked Sendable {
             try output.write(contentsOf: Data("\r\n--\(boundary)--\r\n".utf8))
             try output.close()
         } catch { try? output.close(); throw error }
-        var request = request("projects/\(project)/captures", method: "POST")
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        setProgress(progress)
-        defer { setProgress(nil) }
-        let (data, response) = try await session.upload(for: request, fromFile: bodyURL)
-        return try JSONDecoder().decode(CaptureReply.self, from: checked(data, response))
     }
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64,

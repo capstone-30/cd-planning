@@ -12,4 +12,4 @@ v2는 Mac에서 메모리 압박으로 두 차례 중단됐고, Windows에서 �
 
 현재 PoC는 복원 상태 표시, 관측 근거가 있는 보완 영역 표시, 최초·보완 결과 보존에 집중한다. 규칙 점수는 화질 예측이 아니며, 실제 촬영 지원 여부는 [촬영 비교 절차](../capture-support-validation.md)로 검증한다.
 
-실험 코드·전용 테스트·상세 설계 및 비교 문서는 제거했다. 로컬 원본 산출물(`poc/data/guidance-eval/`, `poc/data/guidance-v2/`, `poc/data/guidance-v2-seeds10/`)은 보존하지만 현재 실행 기능에는 포함하지 않는다.
+실험 코드·전용 테스트·상세 설계 및 비교 문서는 제거했다. 로컬 원본 산출물(`data/guidance-eval/`, `data/guidance-v2/`, `data/guidance-v2-seeds10/`)은 보존하지만 현재 실행 기능에는 포함하지 않는다.

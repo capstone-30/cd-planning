@@ -11,14 +11,11 @@ import numpy as np
 
 from server.runner import Runner
 from server.experiment import gaussian_ply
+from server.store import save
 
 
 def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-
-
-def write(path, value):
-    Path(path).write_text(json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + '\n')
 
 
 def split_slots(training, evaluation):
@@ -100,7 +97,7 @@ def prepare(source, output):
         (folder/'sparse/0/images.txt').write_text('\n'.join(image_lines)+'\n')
         for name in ('cameras.txt', 'points3D.txt'):
             shutil.copyfile(sparse/name, folder/'sparse/0'/name)
-        write(folder/'image-map.json', rows)
+        save(folder/'image-map.json', rows)
         manifest['arms'][arm] = dict(training=len(training), evaluation=len(evaluation),
             eval_period=period, images=rows,
             files={name: digest(folder/'sparse/0'/name) for name in ('cameras.txt', 'images.txt', 'points3D.txt')})
@@ -110,7 +107,7 @@ def prepare(source, output):
         other = by_source[row['source']]
         if any(row[key] != other[key] for key in ('sha256', 'pose', 'evaluation')):
             raise ValueError('Paired input images, poses or holdouts differ.')
-    write(output/'manifest.json', manifest)
+    save(output/'manifest.json', manifest)
     return manifest
 
 
@@ -136,8 +133,8 @@ def contact_sheet(output, results, seed):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--source', type=Path, default=Path('poc/data/guidance-eval/datasets/uniform'))
-    parser.add_argument('--brush', type=Path, default=Path('poc/data/core-check/tools/brush-app-aarch64-apple-darwin/brush_app'))
+    parser.add_argument('--source', type=Path, default=Path('data/guidance-eval/datasets/uniform'))
+    parser.add_argument('--brush', type=Path, default=Path('data/core-check/tools/brush-app-aarch64-apple-darwin/brush_app'))
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     output = args.output.resolve()
@@ -152,7 +149,7 @@ def main():
                  'One room and two optimization seeds cannot establish generalization or guidance utility.'],
         steps=3000, resolution=960, max_splats=300000, seeds=[42, 7],
         brush_sha256=digest(args.brush), manifest_sha256=digest(output/'manifest.json'))
-    write(output/'protocol.json', protocol)
+    save(output/'protocol.json', protocol)
     results = []
     for seed in protocol['seeds']:
         for arm in ('initial', 'supplemented'):
@@ -179,9 +176,9 @@ def main():
             result = dict(arm=arm, seed=seed, views=views,
                           mean_psnr_db=float(np.mean([v['psnr_db'] for v in views])),
                           mean_ssim=float(np.mean([v['ssim'] for v in views])))
-            write(run/'result.json', result)
+            save(run/'result.json', result)
             results.append(result)
-            write(output/'results.json', results)
+            save(output/'results.json', results)
             print(f"{arm} seed {seed}: {result['mean_psnr_db']:.3f} dB / SSIM {result['mean_ssim']:.4f}", flush=True)
     pairs = []
     for seed in protocol['seeds']:
@@ -193,7 +190,7 @@ def main():
         pairs.append(dict(seed=seed, delta_psnr_db=b['mean_psnr_db']-a['mean_psnr_db'],
             delta_ssim=b['mean_ssim']-a['mean_ssim'],
             improved_views=sum(bv['psnr_db'] > av['psnr_db'] for av, bv in zip(a['views'], b['views']))))
-    write(output/'comparison.json', dict(pairs=pairs, results=results,
+    save(output/'comparison.json', dict(pairs=pairs, results=results,
         protocol_sha256=digest(output/'protocol.json'), manifest_sha256=digest(output/'manifest.json')))
     for seed in protocol['seeds']:
         contact_sheet(output, results, seed)

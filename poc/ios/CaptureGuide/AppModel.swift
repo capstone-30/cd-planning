@@ -108,16 +108,18 @@ struct SavedSession: Codable {
     func analyze(mode: String? = nil) async {
         guard let api, let project = saved.project, let initial = saved.initialCapture else { return }
         let combined = (mode ?? saved.role) == "combined" || (mode == nil && saved.role == "supplement")
-        if combined && saved.supplementCapture == nil { return }
+        var ids = [initial]
+        if combined {
+            guard let supplement = saved.supplementCapture else { return }
+            ids.append(supplement)
+        }
         busy = true; message = ""
         defer { busy = false }
         do {
-            let ids = combined ? [initial, saved.supplementCapture!] : [initial]
             let reply: RunReply = try await api.fetch("projects/\(project)/runs", method: "POST",
                 object: ["mode": combined ? "combined" : "initial", "capture_ids": ids])
             if combined { saved.combinedRun = reply.run_id } else { saved.initialRun = reply.run_id }
-            selectedRun = reply.run_id; status = nil; report = nil; screen = 2
-            resumePolling()
+            selectRun(reply.run_id)
         } catch { message = await explain(error) }
     }
 

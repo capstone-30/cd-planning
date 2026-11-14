@@ -6,7 +6,7 @@ $ErrorActionPreference = 'Stop'
 $brush = "$env:USERPROFILE\Tools\brush\brush_app.exe"
 if (-not (Test-Path $brush)) { throw "Brush가 없습니다: $brush" }
 
-$data = Join-Path $PSScriptRoot '..\shared-poc\poc\data'
+$data = Join-Path $PSScriptRoot '..\common\data'
 $runs = Get-ChildItem $data -Directory | ForEach-Object { Get-ChildItem (Join-Path $_.FullName 'runs') -Directory -ErrorAction SilentlyContinue } |
     Where-Object { Test-Path (Join-Path $_.FullName 'splats\result.ply') } |
     ForEach-Object {

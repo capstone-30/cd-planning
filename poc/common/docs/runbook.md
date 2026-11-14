@@ -1,7 +1,7 @@
 # 공용 API·Brush 운영
 
 macOS·Windows용 기존 Brush PoC의 공통 절차다. Ubuntu·Nerfstudio 본 프로젝트와 별개다.
-명령은 `poc/shared-poc/poc/`에서 실행한다. 각 OS의 가상환경 Python을 사용하고 서버와 같은 `POC_DATA` 또는 `--data` 경로를 지정한다.
+명령은 `poc/common/`에서 실행한다. 각 OS의 가상환경 Python을 사용하고 서버와 같은 `POC_DATA` 또는 `--data` 경로를 지정한다.
 macOS는 `.venv/bin/python`, Windows PowerShell은 `.venv\Scripts\python`을 사용한다.
 아래 curl 예시는 POSIX 셸 기준이며 Windows에서는 `curl.exe`와 PowerShell 인용·줄바꿈 문법으로 조정한다.
 

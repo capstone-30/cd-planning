@@ -1,5 +1,6 @@
 import argparse
 import ipaddress
+import math
 import socket
 
 import uvicorn
@@ -25,7 +26,7 @@ if __name__ == '__main__':
     tailnet = address.version == 4 and address in ipaddress.ip_network('100.64.0.0/10')
     if not (address.is_private or tailnet) or args.host == '0.0.0.0':
         parser.error('localhost, 신뢰하는 LAN의 사설 IP 또는 Tailscale IP(100.x)를 지정하세요.')
-    if args.blur_threshold < 0 or not __import__('math').isfinite(args.blur_threshold):
+    if args.blur_threshold < 0 or not math.isfinite(args.blur_threshold):
         parser.error('선명도 임계값은 0 이상의 유한수여야 합니다.')
     config = {key: getattr(args, key) for key in ('initial_frames', 'supplement_frames', 'long_edge', 'blur_threshold', 'matcher')}
     print(f'접속 주소: http://{args.host}:{args.port} (토큰은 POC_TOKEN 환경 변수)')
