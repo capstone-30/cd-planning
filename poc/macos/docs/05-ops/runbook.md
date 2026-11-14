@@ -29,7 +29,7 @@ COLMAP의 이전 `SiftExtraction/SiftMatching`과 새 `FeatureExtraction/Feature
 
 ## 2. 서버 실행
 
-신뢰하는 동일 Wi-Fi에서만 사용한다. Mac의 LAN 주소로 바인딩하고 포트 포워딩하지 않는다.
+신뢰하는 동일 Wi-Fi 또는 Tailscale에서만 사용한다. Mac의 LAN 주소나 Tailscale 주소(`tailscale ip -4`, 100.x)로 바인딩하고 포트 포워딩하지 않는다. Tailscale 사용 시 폰과 Mac에서 같은 계정으로 로그인하고 연결하면 서로 다른 네트워크에서도 접속할 수 있다.
 원본·분석·실패 결과는 자동 삭제하지 않는다. 작업 전 10GB 이상의 여유 공간을 확보한다.
 
 ```sh
