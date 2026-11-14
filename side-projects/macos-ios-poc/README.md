@@ -12,6 +12,7 @@
 - [iOS UX/UI 명세](docs/02-uxui/uxui-specs.md)
 - [Mac·Brush 기술 명세](docs/03-tech/tech-specs.md)
 - [설치·서버·앱·Brush 실행 안내](docs/05-ops/runbook.md)
+- [Android 웹 업로드·Windows 실행 안내](poc/GALAXY.md): 팀원 개발·연습용
 - [검증 기록](docs/04-test/validation.md)
 - [촬영 지원 연구 질문·파일럿 절차](docs/04-test/capture-support-validation.md)
 - [60+10 사용자 비교 실행표](docs/04-test/user-study-session.md)

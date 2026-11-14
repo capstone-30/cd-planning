@@ -39,6 +39,9 @@ class Guard:
     async def __call__(self, scope, receive, send):
         if scope['type'] != 'http':
             return await self.app(scope, receive, send)
+        if scope['path'] == '/' and scope['method'] in ('GET', 'HEAD'):
+            # The phone web page holds no data; every API call it makes still needs the token.
+            return await self.app(scope, receive, send)
         headers = dict(scope['headers'])
         authorization = headers.get(b'authorization', b'')
         if not hmac.compare_digest(authorization, ('Bearer '+self.token).encode()):
@@ -109,6 +112,11 @@ def create_app(root=None, token=None, config=None, processor=execute):
     @app.exception_handler(BodyTooLarge)
     async def body_handler(request, error):
         return JSONResponse({'error': {'code': 'FILE_TOO_LARGE', 'message': '영상은 250MB 이하여야 합니다.'}}, 413)
+
+    @app.get('/', include_in_schema=False)
+    def phone_page():
+        return FileResponse(Path(__file__).with_name('web')/'index.html', media_type='text/html',
+                            headers={'Cache-Control': 'no-store'})
 
     @app.get('/health')
     def health():
