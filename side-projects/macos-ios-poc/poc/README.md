@@ -1,10 +1,10 @@
-# 계획서 2안 — 최소 PoC
+# 촬영 보완 사이드 프로젝트 — 분석 CLI
 
-기존 분석 CLI 안내. Mac API·영상·iOS·P1 도구는 [실행 안내](../docs/runbook.md), 완료 여부·기기 검증은 [검증 기록](../docs/validation.md)을 따른다.
+[macOS·iOS 사이드 프로젝트](../README.md)의 기존 분석 CLI 안내. Mac API·영상·iOS·P1 도구는 [실행 안내](../docs/05-ops/runbook.md), 완료 여부·기기 검증은 [검증 기록](../docs/04-test/validation.md)을 따른다.
 
-Python 3 표준 라이브러리로 **SfM → 영역 특징 → 규칙 기반 보완 우선순위**를 계산한다. 별도 패키지 불필요. 후보 시점 선택 실험은 [종료 기록](../docs/reports/closed-experiments.md)만 남겼으며 현재 CLI·서버는 보완 영역을 표시한다.
+Python 3 표준 라이브러리로 **SfM → 영역 특징 → 규칙 기반 보완 우선순위**를 계산한다. 별도 패키지 불필요. 후보 시점 선택 실험은 [종료 기록](../docs/04-test/reports/closed-experiments.md)만 남겼으며 현재 CLI·서버는 보완 영역을 표시한다.
 
-저장소 루트에서 실행:
+사이드 프로젝트 루트(`side-projects/macos-ios-poc/`)에서 실행:
 
 ```sh
 python3 poc/poc.py --demo
@@ -47,7 +47,7 @@ python3 poc/poc.py --colmap /path/to/colmap-text-model --output poc/real-output
 
 ## 저장 실사 이미지의 보완 효과 비교
 
-별도 실험 CLI `check_supplement_effect.py`는 저장된 `guidance-eval/datasets/uniform`의 A 60장과 A+10장을 새로 Brush 학습한다. 두 조건은 같은 평가 사진 10장과 초기 점군을 사용한다. 선택 알고리즘 실험을 재개하는 기능은 아니다. [결과와 한계](../docs/reports/supplement-effect-result.md)를 참고한다.
+별도 실험 CLI `check_supplement_effect.py`는 저장된 `guidance-eval/datasets/uniform`의 A 60장과 A+10장을 새로 Brush 학습한다. 두 조건은 같은 평가 사진 10장과 초기 점군을 사용한다. 선택 알고리즘 실험을 재개하는 기능은 아니다. [결과와 한계](../docs/04-test/reports/supplement-effect-result.md)를 참고한다.
 
 ```sh
 poc/.venv/bin/python poc/check_supplement_effect.py --output poc/data/supplement-effect-new

@@ -1,21 +1,24 @@
 # 촬영 안내 PoC 실행
 
-구현 기준: [기능 명세](func-specs.md), [기술 명세](tech-specs.md).
+> **사이드 프로젝트 실행 안내:** 아래 명령은 macOS·iOS·Brush PoC를 재현하는 절차다. 본 프로젝트의 Ubuntu·Nerfstudio 운영 절차와 구분한다. [사이드 프로젝트 안내](../../README.md)를 따른다.
+
+구현 기준: [기능 명세](../01-func/func-specs.md), [UX/UI 명세](../02-uxui/uxui-specs.md), [기술 명세](../03-tech/tech-specs.md).
 Mac API, 실제 영상용 FFmpeg → COLMAP → 영역 분석, SwiftUI 촬영 앱, P1 운영자 도구를 제공한다.
 **실제 장면의 P0/P1 완료 판정은 아직 하지 않았다.** 합성 데모·고정 fixture 테스트는 실제 영상 검증을 대신하지 않는다.
 
 ## 1. Mac 준비
 
 Python 3.12 이상과 Xcode가 필요하다. FFmpeg·COLMAP·Brush는 사용자가 Mac에 설치한다.
+아래 `cd` 명령은 저장소 루트에서 실행한다.
 예를 들어 Homebrew의 `brew install ffmpeg colmap`으로 앞의 두 도구를 설치하고,
 Brush는 [공식 배포](https://github.com/ArthurBrussee/brush/releases)를 사용한다.
 Brush CLI를 사용하려면 실행 파일을 `brush`라는 이름으로 PATH에 둔다.
 이 저장소는 시스템 패키지를 자동 설치하거나 Brush 옵션을 추측하지 않는다.
 
 ```sh
-cd /Users/jeong/Projects/capstone-design/poc
+cd side-projects/macos-ios-poc/poc
 python3 -m venv .venv
-.venv/bin/pip install -r requirements-dev.txt
+.venv/bin/python -m pip install -r requirements-dev.txt
 .venv/bin/python -m server.experiment doctor --output gate-tools.json
 ```
 
@@ -166,8 +169,10 @@ brush --help
 
 ## 7. 검증
 
+저장소 루트에서 실행한다.
+
 ```sh
-cd /Users/jeong/Projects/capstone-design
+cd side-projects/macos-ios-poc
 poc/.venv/bin/python -m unittest discover -s poc -v
 python3 poc/poc.py --demo --output /tmp/capture-guide-demo
 xcodebuild -project ios/CaptureGuide.xcodeproj -scheme CaptureGuide -sdk iphoneos \
@@ -178,7 +183,7 @@ xcodebuild -project ios/CaptureGuide.xcodeproj -scheme CaptureGuide -sdk iphoneo
 테스트는 입력·인증·크기 제한·프로젝트 귀속·잠금·상태 저장·재시작·실패·시간 제한·2D 상자·방향·좌표 정렬과
 fixture 외부 명령으로 구성한 파이프라인 연결을 검사한다. 실제 COLMAP 또는 Brush 성공을 검증하지 않는다.
 
-실제 장면 체크는 [검증 기록](validation.md)에 남긴다.
+실제 장면 체크는 [검증 기록](../04-test/validation.md)에 남긴다.
 
 구현 참고: [COLMAP CLI](https://colmap.github.io/cli.html), [Brush](https://github.com/ArthurBrussee/brush),
 [Apple SDR/HDR 설정](https://developer.apple.com/documentation/avfoundation/avcapturedevice/automaticallyadjustsvideohdrenabled),

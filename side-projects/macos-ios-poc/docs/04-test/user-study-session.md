@@ -45,10 +45,10 @@
 
 ## 실행 설정
 
-[기존 실행 안내](runbook.md)의 서버 실행에 아래 인수를 사용한다. 토큰은 기존 절차대로 환경 변수에만 설정한다. 기존 데이터와 분리된 새 경로를 사용한다.
+[기존 실행 안내](../05-ops/runbook.md)의 서버 실행에 아래 인수를 사용한다. 토큰은 기존 절차대로 환경 변수에만 설정한다. 기존 데이터와 분리된 새 경로를 사용한다.
 
 ```sh
-cd /Users/jeong/Projects/capstone-design/poc
+cd side-projects/macos-ios-poc/poc
 .venv/bin/python -m server --host 127.0.0.1 --port 8080 \
   --data data/user-study-60plus10 \
   --initial-frames 60 --supplement-frames 10 --long-edge 960 --blur-threshold 0

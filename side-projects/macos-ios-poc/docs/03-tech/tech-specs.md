@@ -1,10 +1,12 @@
 # 경량 PoC 기술 명세
 
-작성일: 2026-11-10 · 기능 기준: [func-specs.md](func-specs.md)
+> **사이드 프로젝트 기술 명세:** Mac·Brush와 iOS 기반 PoC의 구현·재현 기준으로 유지한다. 본 프로젝트는 별도의 [Ubuntu·Nerfstudio 스택](../../../../docs/03-tech/3dgs-stack.md)을 따른다.
 
-초기 명세를 구현 현황에 맞춰 갱신한 문서다. 현재 실행·실측 범위와 미완료 항목은 [검증 기록](validation.md)을 따른다. 공개 실내 데이터의 Mac·Windows 처리 경로와 iOS 빌드는 검증했지만 실기기 전체 흐름은 미검증이다. 시점 선택 실험은 [중단 기록](reports/closed-experiments.md)으로 남겼다.
+작성일: 2026-11-10 · 기능 기준: [func-specs.md](../01-func/func-specs.md) · UX/UI 기준: [uxui-specs.md](../02-uxui/uxui-specs.md)
 
-2026-11-13 갱신: Windows에서도 핵심 경로를 재현했으며 v2 화질 비교에서는 균등 선택 대비 개선을 확인하지 못했다. 제품 목표를 복원 상태 표시·보완 촬영 지원으로 조정했다. 저장 자료의 상태 일치 점검은 [후속 결과](reports/capture-support-result.md), 실기기 지원 효과 검증은 [촬영 절차](capture-support-validation.md)를 따른다.
+초기 명세를 구현 현황에 맞춰 갱신한 문서다. 현재 실행·실측 범위와 미완료 항목은 [검증 기록](../04-test/validation.md)을 따른다. 공개 실내 데이터의 Mac·Windows 처리 경로와 iOS 빌드는 검증했지만 실기기 전체 흐름은 미검증이다. 시점 선택 실험은 [중단 기록](../04-test/reports/closed-experiments.md)으로 남겼다.
+
+2026-11-13 갱신: Windows에서도 핵심 경로를 재현했으며 v2 화질 비교에서는 균등 선택 대비 개선을 확인하지 못했다. 제품 목표를 복원 상태 표시·보완 촬영 지원으로 조정했다. 저장 자료의 상태 일치 점검은 [후속 결과](../04-test/reports/capture-support-result.md), 실기기 지원 효과 검증은 [촬영 절차](../04-test/capture-support-validation.md)를 따른다.
 
 ## 1. 구성과 선택
 

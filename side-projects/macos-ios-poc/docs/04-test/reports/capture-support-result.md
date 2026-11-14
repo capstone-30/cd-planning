@@ -33,7 +33,7 @@
 
 ## 재현
 
-저장소 루트에서 실행한다. 출력은 새 파일이어야 하며 기존 증거를 덮어쓰지 않는다. Python의 assert 검사를 사용하므로 `-O` 옵션 없이 실행한다.
+사이드 프로젝트 루트(`side-projects/macos-ios-poc/`)에서 실행한다. 출력은 새 파일이어야 하며 기존 증거를 덮어쓰지 않는다. Python의 assert 검사를 사용하므로 `-O` 옵션 없이 실행한다.
 
 ```sh
 python3 poc/check_capture_support.py --output /tmp/capture-support-check-new.json
