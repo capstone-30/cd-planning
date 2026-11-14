@@ -15,4 +15,4 @@
 
 단계별 처리 시간과 자원 사용량은 실제 환경에서 측정한다. 촬영 보완 효과는 기본 경로 검증과 별도 실험으로 평가한다. 평가 입력·시점·ROI를 결과 확인 전에 고정하고 학습·평가 데이터의 사용 범위를 기록한다.
 
-[사이드 프로젝트 검증 기록](../../side-projects/macos-ios-poc/docs/04-test/validation.md)의 Mac·Windows·Brush 실측과 기존 코드 테스트는 해당 PoC의 증거로만 사용한다. 본 프로젝트의 실행 성공 또는 사용자 효과를 뜻하지 않는다.
+[기존 PoC 검증 기록](../../poc/shared-poc/docs/04-test/validation.md)의 Mac·Windows·Brush 실측과 기존 코드 테스트는 해당 PoC의 증거로만 사용한다. 본 프로젝트의 실행 성공 또는 사용자 효과를 뜻하지 않는다.

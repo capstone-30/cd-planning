@@ -15,4 +15,4 @@
 
 본 프로젝트의 설치 버전·GPU 자원 예산·CLI 인수·원격 접속 구성은 아직 고정하지 않았다. [확정 스택](../03-tech/3dgs-stack.md)을 기준으로 첫 실행 후 고정한다.
 
-Mac 서버 실행, iOS 앱 설치, Brush 명령과 기존 코드 테스트는 [사이드 프로젝트 실행 안내](../../side-projects/macos-ios-poc/docs/05-ops/runbook.md)를 따른다. 소스 코드와 로컬 실험 데이터는 `side-projects/macos-ios-poc/`에서 함께 관리한다.
+기존 PoC의 서버 환경은 [macOS](../../poc/macos/README.md)·[Windows](../../poc/windows/README.md), 모바일 클라이언트는 [iOS](../../poc/ios/README.md)·[Android 웹](../../poc/android/README.md) 안내를 따른다. 공용 Python 코드·Brush 운영·실험 데이터는 [공용 PoC](../../poc/shared-poc/README.md)에서 관리한다.

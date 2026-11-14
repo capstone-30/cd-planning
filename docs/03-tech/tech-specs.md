@@ -21,6 +21,6 @@
 - 전후 비교는 SfM 좌표계와 평가 시점 대응을 확인한다. 정렬하지 않은 결과를 같은 영역·시점의 정량 비교로 취급하지 않는다.
 - 초기 파이프라인은 Nerfstudio 제공 도구로 연결한다. 별도 작업 API·큐·DB·자체 뷰어의 도입 여부는 기본 경로 검증 후 결정한다.
 
-`side-projects/macos-ios-poc/poc/`의 Mac API와 Brush 실행 연동은 사이드 프로젝트 구현이다. 재사용 여부는 새 스택 검증 후 판단하며 본 프로젝트의 필수 전환 대상으로 두지 않는다. Mac 16GB 예산과 Brush 설정을 Ubuntu GPU 환경에 그대로 적용하지 않는다.
+`poc/shared-poc/poc/`의 Mac API와 Brush 실행 연동은 기존 PoC 구현이다. 재사용 여부는 새 스택 검증 후 판단하며 본 프로젝트의 필수 전환 대상으로 두지 않는다. Mac 16GB 예산과 Brush 설정을 Ubuntu GPU 환경에 그대로 적용하지 않는다.
 
-[본 프로젝트 검증 계획](../04-test/validation.md) · [사이드 프로젝트 기술 명세](../../side-projects/macos-ios-poc/docs/03-tech/tech-specs.md)
+[본 프로젝트 검증 계획](../04-test/validation.md) · [기존 PoC 기술 명세](../../poc/macos/docs/03-tech/tech-specs.md)

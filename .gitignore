@@ -1,4 +1,4 @@
 .DS_Store
 target/autotune/
-side-projects/macos-ios-poc/ios/build/
-side-projects/macos-ios-poc/ios/**/xcuserdata/
+poc/ios/build/
+poc/ios/**/xcuserdata/

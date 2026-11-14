@@ -10,4 +10,4 @@
 
 뷰어 접속 주소·원격 접속 방식·재로딩 절차는 실제 환경 검증 후 [운영 안내](../05-ops/runbook.md)에 기록한다. 현재 접속 가능한 본 프로젝트 뷰어는 검증하지 않았다.
 
-iOS 탭·카메라·업로드·Mac 상태 문구는 [사이드 프로젝트 UX/UI 명세](../../side-projects/macos-ios-poc/docs/02-uxui/uxui-specs.md)에서 유지한다.
+iOS 탭·카메라·업로드·Mac 상태 문구는 [기존 PoC UX/UI 명세](../../poc/ios/docs/02-uxui/uxui-specs.md)에서 유지한다.
